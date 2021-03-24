@@ -10,5 +10,8 @@
 - Pedro Raposo Felix de Sousa;
 - Victor de Oliveira Martins Azevedo.
 
+<strong>Dependências</strong>
+Para instalar as dependências pasta executar o comando "npm install"
+
 <strong>Universidade Federal Rural do Rio de Janeiro</strong></br>
 Sistemas de Informação</br>
