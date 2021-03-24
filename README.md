@@ -11,7 +11,7 @@
 - Victor de Oliveira Martins Azevedo.
 
 <strong>Dependências:</strong><br>
-Para instalar as dependências pasta executar o comando "npm install"
+Para instalar as dependências basta executar o comando "npm install"
 
 <strong>Universidade Federal Rural do Rio de Janeiro</strong></br>
 Sistemas de Informação</br>
