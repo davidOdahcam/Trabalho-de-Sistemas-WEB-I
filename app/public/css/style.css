@@ -10379,7 +10379,6 @@ h3 {
 .footer .footer-info .footer-info-title::after {
   content: "";
   display: block;
-  margin: right;
   max-width: 75px;
   height: 2px;
   margin-top: 5px;
@@ -10415,14 +10414,12 @@ h3 {
 }
 .form .form-header .form-header-title {
   font-size: 1.5rem;
-  text-align: center;
   text-transform: uppercase;
   color: #3AB091;
 }
 .form .form-header .form-header-title::after {
   content: "";
   display: block;
-  margin: auto;
   max-width: 150px;
   height: 2px;
   margin-top: 5px;

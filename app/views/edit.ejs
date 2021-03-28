@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Trabalho de WEB 1</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <div class="container">
+                <img src="./images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <form action="" method="POST" enctype="multipart/form-data" class="form">
+                    <header class="form-header">
+                        <h2 class="form-header-title">Formulário de edição</h2>
+                    </header>
+
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Digite seu nome" value="" required/>
+                        <small class="text-danger">Mensagem de erro</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cpf">CPF</label>
+                        <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Digite seu CPF" value="" required/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Digite sem email" value="" required/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="********" value="" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirmar senha</label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********" value="" required/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="birthdate">Data de nascimento</label>
+                        <input type="date" name="birthdate" id="birthdate" class="form-control" placeholder="DD/MM/AAAA" value=""/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Digite seu telefone" value="" required/>
+                    </div>
+                    
+                    <button class="btn btn-color-3 btn-block btn-lg mt-4">Cadastrar</button>
+
+                    <hr>
+
+                    <small class="d-block pt-2 text-center">Já possui cadastro? <a href="/entrar">Entre com uma conta</a></small>
+                </form>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 footer-info">
+                        <h5 class="footer-info-title">Trabalho de WEB1</h5>
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam eum a nobis similique eaque, est recusandae animi, assumenda amet adipisci velit impedit, deserunt magnam! Dicta tempore aliquid iure eveniet eligendi!</p>
+                    </div>
+
+                    <div class="col-md-4 footer-info">
+                        <h5 class="footer-info-title">Ferramentas utilizadas</h5>
+                        <ul class="footer-info-list">
+                            <li>Node.js</li>
+                            <li>MySQL</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4 footer-info">
+                        <h5 class="footer-info-title">Feito por</h5>
+                        <ul class="footer-info-list">
+                            <li>David dos Santos Machado</li>
+                            <li>Pedro Raposo Felix de Sousa</li>
+                            <li>Victor de Oliveira Martins Azevedo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+        
+    <script src="./js/jquery.js"></script>
+    <script src="./js/popper.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+</html>

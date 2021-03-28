@@ -1,5 +1,5 @@
 module.exports.index = (app, req, res) => {
-    res.render("login");
+    res.render("index");
 }
 
 module.exports.show = (app, req, res) => {
@@ -7,7 +7,7 @@ module.exports.show = (app, req, res) => {
 }
 
 module.exports.create = (app, req, res) => {
-    res.render("register");
+    res.render("create");
 }
 
 module.exports.store = (app, req, res) => {
@@ -15,7 +15,7 @@ module.exports.store = (app, req, res) => {
 }
 
 module.exports.edit = (app, req, res) => {
-    
+    res.render("edit");
 }
 
 module.exports.update = (app, req, res) => {

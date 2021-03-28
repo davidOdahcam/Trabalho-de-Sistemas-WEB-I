@@ -1,8 +1,7 @@
-@mixin line-after($width: 150px, $margin: auto) {
+@mixin line-after($width: 150px) {
     &::after {
         content: "";
         display: block;
-        margin: $margin;
         max-width: $width;
         height: 2px;
         margin-top: 5px;

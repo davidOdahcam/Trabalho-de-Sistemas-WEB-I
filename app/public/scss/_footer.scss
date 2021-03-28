@@ -12,7 +12,7 @@
         }
         .footer-info-title {
             color: $color-3;
-            @include line-after($width: 75px, $margin: right);
+            @include line-after($width: 75px);
         }
         .footer-info-list {
             list-style: none;
