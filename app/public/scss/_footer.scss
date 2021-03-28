@@ -1,0 +1,34 @@
+.footer {
+    width: 100%;
+    padding: 2rem 0;
+    box-shadow: 0 -5px 10px rgba($color: #000000, $alpha: 0.1);
+    background-color: $white;
+    .footer-info {
+        @include media-breakpoint-down(md) {
+            margin-bottom: 1rem;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+        .footer-info-title {
+            color: $color-3;
+            @include line-after($width: 75px, $margin: right);
+        }
+        .footer-info-list {
+            list-style: none;
+            padding-inline-start: 0;
+            li {
+                font-size: 1rem;
+                &::before {
+                    content: "";
+                    display: inline-block;
+                    width: 5px;
+                    height: 5px;
+                    margin-right: 0.5rem;
+                    margin-bottom: 0.15rem;
+                    background-color: $color-3;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+.header {
+    margin-bottom: 4rem;
+    padding: 1rem 0;
+    box-shadow: 0 5px 10px rgba($color: #000000, $alpha: 0.1);
+    background-color: $white;
+    .logo {
+        width: 25%;
+        @include media-breakpoint-down(md) {
+            width: 50%;
+        }
+        @include media-breakpoint-down(sm) {
+            width: 80%;
+        }
+    }
+}

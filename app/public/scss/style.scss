@@ -1,0 +1,30 @@
+// sass --watch app/public/scss/style.scss:app/public/css/style.css
+
+@import './variables';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import './mixins';
+@import './header';
+@import './footer';
+@import './form';
+
+body {
+    font-family: 'Poppins';
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
+.main {
+    margin-bottom: 4rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
