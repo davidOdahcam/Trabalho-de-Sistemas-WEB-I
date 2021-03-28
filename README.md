@@ -1,9 +1,8 @@
 ## TRABALHO PRÁTICO DE SISTEMAS WEB 1
 
 <strong>As ferramentas utilizadas para sua produção foram:</strong>
-- Ferramenta 1;
-- Ferramenta 2;
-- Ferramenta 3.
+- [Node.js](https://nodejs.org/en/);
+- [MySQL](https://www.mysql.com)
 
 <strong>Integrantes do grupo:</strong>
 - David dos Santos Machado;
@@ -14,4 +13,4 @@
 Para instalar as dependências basta executar o comando "npm install"
 
 <strong>Universidade Federal Rural do Rio de Janeiro</strong></br>
-Sistemas de Informação</br>
+Sistemas de Informação
