@@ -15,13 +15,14 @@ app.set("views", "./app/views");
 //     next();
 // }
 
-// app.use(auth);
+// app.use(auth); // HABILITAR QUANDO COOKIES FOREM IMPLEMENTADOS
 
 app.use(express.static("./app/public"));
 
 consign()
     .include("app/routes")
     .then("config/dbConnection.js")
+    .then("app/middlewares")
     .then("app/models")
     .then("app/controllers")
     .into(app);
