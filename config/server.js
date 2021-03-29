@@ -5,23 +5,17 @@ let app = express();
 app.set("view engine", "ejs");
 app.set("views", "./app/views");
 
-// app.use("teste", (req, res, next) => {
-//     console.log("Middleware");
-//     next();
-// })
-
-// app.use((req, res, next) => {
-//     console.log(req.url);
+// const auth = (req, res, next) => {
+//     if(req.url == "/login") {
+//         if(req.cookies.logged) res.redirect("/");
+//     } else if(req.url != "/cadastrar") {
+//         if(!req.cookies.logged) res.redirect("/login");
+//     }
     
 //     next();
-// });
+// }
 
-// app.set('teste', () =>
-//     (req, res, next) => {
-//         console.log(109);
-//         next();
-//     }
-// ); // IMPLEMENTAÇÃO EXPERIEMNTAL DE MIDDLEWARES 
+// app.use(auth);
 
 app.use(express.static("./app/public"));
 

@@ -15,7 +15,7 @@
 
 <body>
     <div class="page-wrapper">
-        <!-- <header class="header">
+        <header class="header">
             <div class="container">
                 <img src="./images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo">
             </div>
@@ -73,20 +73,11 @@
                     </div>
                 </div>
             </div>
-        </footer> -->
-        <% if (typeof(users) != "undefined") { %>
-            <h1>Usuários cadastrados: <%= users.length %> </h1>
-            
-            <% for(let user of users) { %>
-                <h3>ID: <%= user.id %> </h3>
-                <h3>Nome: <%= user.name %> </h3>
-                <h3>Email: <%= user.email %> </h3>
-                <h3>CPF: <%= user.cpf %> </h3>
-                <h3>Telefone: <%= user.tel %> </h3>
-            <% } %>
-        <% } else { %>
-            <h1>Nenhum usuário cadastrado no banco de dados!</h1>    
-        <% } %> 
+        </footer>
+    </div>
+
+    <div>
+        <% if(typeof users != "undefined") console.log(users) %> 
     </div>
         
     <script src="./js/jquery.js"></script>

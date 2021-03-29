@@ -12,6 +12,14 @@ module.exports.index = (app, req, res) => {
     })
 }
 
+module.exports.login = (app, req, res) => {
+    res.render("login");
+}
+
+module.exports.logout = (app, req, res) => {
+    res.end("logout");
+}
+
 module.exports.show = (app, req, res) => {
     const id = req.params.id;
 

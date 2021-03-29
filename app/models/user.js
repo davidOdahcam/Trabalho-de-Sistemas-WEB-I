@@ -9,7 +9,7 @@ class User {
     }
 
     selectAll(callback) {
-        this.connection.query(`select * from users`, this.user, callback);
+        this.connection.query(`select * from users`, callback);
     }
 
     create(callback) {

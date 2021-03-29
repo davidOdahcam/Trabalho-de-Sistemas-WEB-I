@@ -1,5 +1,5 @@
 module.exports = (app) => {
-    app.get("/usuarios", (req, res) => {
+    app.get("/", (req, res) => {
         app.app.controllers.user.index(app, req, res);
     });
     
@@ -7,27 +7,27 @@ module.exports = (app) => {
     //     console.log("Teste");
     // })
 
-    app.get("/usuarios/:id", (req, res) => {
-        app.app.controllers.user.show(app, req, res);
-    });
-
-    app.get("/usuarios/cadastrar", (req, res) => {
+    app.get("/cadastrar", (req, res) => {
         app.app.controllers.user.create(app, req, res);
     });
 
-    app.post("/usuarios/cadastrar", (req, res) => {
+    app.post("/cadastrar", (req, res) => {
         app.app.controllers.user.store(app, req, res);
     });
 
-    app.get("/usuarios/:id/editar", (req, res) => {
+    app.get("/:id/mostrar", (req, res) => {
+        app.app.controllers.user.show(app, req, res);
+    });
+
+    app.get("/:id/editar", (req, res) => {
         app.app.controllers.user.edit(app, req, res);
     });
     
-    app.put("/usuarios/:id/editar", (req, res) => {
+    app.put("/:id/editar", (req, res) => {
         app.app.controllers.user.update(app, req, res);
     }); 
 
-    app.delete("/usuarios/:id/deletar", (req, res) => {
+    app.delete("/:id/deletar", (req, res) => {
         app.app.controllers.user.destroy(app, req, res);
     });
 }
