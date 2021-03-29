@@ -1,22 +1,22 @@
 {
-  "name": "trabalho_web_2",
+  "name": "trabalho_web_1",
   "version": "1.0.0",
-  "description": "<strong>As ferramentas utilizadas para sua produção foram:</strong>\r - Ferramenta 1;\r - Ferramenta 2;\r - Ferramenta 3.",
+  "description": "Trabalho de WEB1, UFRRJ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davidOdahcam/trabalho_web_2.git"
+    "url": "git+https://github.com/davidOdahcam/trabalho_web_1.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/davidOdahcam/trabalho_web_2/issues"
+    "url": "https://github.com/davidOdahcam/trabalho_web_1/issues"
   },
-  "homepage": "https://github.com/davidOdahcam/trabalho_web_2#readme",
+  "homepage": "https://github.com/davidOdahcam/trabalho_web_1#readme",
   "dependencies": {
     "bootstrap": "^4.6.0",
     "consign": "^0.1.6",
