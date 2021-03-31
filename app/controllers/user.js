@@ -2,14 +2,7 @@ module.exports.index = (app, req, res) => {
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(null, connection);
 
-    User.selectAll((err, result) => {
-        if(err) {
-            console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
-        } else {
-            res.render("index", {users: result});
-        }
-    })
+    res.render("index");
 }
 
 module.exports.login = (app, req, res) => {
@@ -20,18 +13,19 @@ module.exports.logout = (app, req, res) => {
     res.end("logout");
 }
 
-module.exports.show = (app, req, res) => {
-    const id = req.params.id;
+module.exports.search = (app, req, res) => {
+    const name = req.body.name;
 
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(null, connection);
 
-    User.selectOne(id, (err, result) => {
+    User.selectUsers(name, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
             res.render("index", {err: err})
         } else {
-            res.render("index", {users: result});
+            console.log(result);
+            res.render("index", {users: result, search: true});
         }
     })
 }

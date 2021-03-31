@@ -17,27 +17,61 @@
     <div class="page-wrapper">
         <header class="header">
             <div class="container">
-                <img src="./images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/>
+                <a href="./"><img src="./images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
             </div>
         </header>
 
         <main class="main">
             <div class="container">
-                <div class="content">
-                    <% if (typeof(users) != "undefined") { %>
-                        <h1>Usuários cadastrados: <%= users.length %> </h1>
-                        
-                        <% for(let user of users) { %>
-                            <h3>ID: <%= user.id %> </h3>
-                            <h3>Nome: <%= user.name %> </h3>
-                            <h3>Email: <%= user.email %> </h3>
-                            <h3>CPF: <%= user.cpf %> </h3>
-                            <h3>Telefone: <%= user.tel %> </h3>
-                        <% } %>
-                    <% } else { %>
-                        <h1>Nenhum usuário cadastrado no banco de dados!</h1>    
-                    <% } %> 
+                <div class="content mb-4">
+                    <form action="/buscar" method="post" class="">
+                        <div class="form-row">
+                            <div class="col-md-10">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Busque por nome" required/>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-color-3 btn-block">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
+
+                <% if (typeof search !== 'undefined') { %>
+                    <div class="content">
+                        <header class="content-header">
+                            <h2 class="content-header-title">Resultados da busca</h2>
+                        </header>
+
+                        <% if (typeof(users) != "undefined") { %>
+                            <% for(let user of users) { %>
+                                <span><strong>Total de resultados:</strong> <%= users.length %></span>
+                                <table class="table">
+                                    <thead class="bg-color-3 text-light">
+                                        <tr>
+                                            <th scope="col">Nome</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">CPF</th>
+                                            <th scope="col">Telefone</th>
+                                            <th scope="col">Data de Nascimento</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><%= user.name %></th>
+                                            <td><%= user.email %></td>
+                                            <td><%= user.cpf %></td>
+                                            <td><%= user.phone %></td>
+                                            <td><%= user.birthdate %></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            <% } %>
+                        <% } else { %>
+                            <h1>Nenhum usuário cadastrado no banco de dados!</h1>    
+                        <% } %>
+                    </div>
+                <% } %>
             </div>
         </main>
 

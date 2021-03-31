@@ -26,4 +26,13 @@ body {
     border-radius: $border-radius;
     box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.1);
     background-color: $white;
+    .content-header {
+        margin-bottom: 2rem;
+        .content-header-title {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            color: $color-3;
+            @include line-after;
+        }
+    }
 }

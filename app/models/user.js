@@ -4,12 +4,8 @@ class User {
         this.connection = connection();
     }
 
-    selectOne(id, callback) {
-        this.connection.query(`select * from users where id = ${id}`, callback);
-    }
-
-    selectAll(callback) {
-        this.connection.query(`select * from users`, callback);
+    selectUsers(name, callback) {
+        this.connection.query(`select * from users where locate('${name}', users.name);`, callback);
     }
 
     create(callback) {
