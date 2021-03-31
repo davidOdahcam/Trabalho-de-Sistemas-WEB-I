@@ -1,13 +1,20 @@
 module.exports.index = (app, req, res) => {
     const connection = app.config.dbConnection;
-    const User = new app.app.models.user(null, connection);
+    const User = new app.models.user(null, connection);
+    // console.log(connection()); return;
 
     User.selectAll((err, result) => {
         if(err) {
-            console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            console.log({message: "Algo deu errado durante uma query", err: err});
+            res.writeHead(500, {"Content-Type": "application/json"});
+            res.write(JSON.stringify({status: 500, error: "Algo deu errado durante uma query"}));
+            res.end();
+            //res.render("index", {err: err})
         } else {
-            res.render("index", {users: result});
+            res.writeHead(200, {"Content-Type": "application/json"});
+            res.write(JSON.stringify({status: 200, users: result}));
+            res.end();
+            //res.render("index", {users: result});
         }
     })
 }
