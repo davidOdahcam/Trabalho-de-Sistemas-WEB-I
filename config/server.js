@@ -84,23 +84,25 @@ app.router = (req, res) => {
     req.query = queryMaker(req.url);
     // req.params = paramsMaker(req.url);
 
-    let notFound = true;
-    console.log(req.url)
-    for(let route in app.routes) {
-        request_url = app.routes["user"][req.method][req.url];
+    console.log(req);
 
-        if(request_url) {
-            notFound = false;
-            request_url.callback(app, req, res);
-            break;
-        }
-    }
+    // let notFound = true;
+    // console.log(req.url)
+    // for(let route in app.routes) {
+    //     request_url = app.routes["user"][req.method][req.url];
 
-    if(notFound) {
-        res.writeHead(404);
-        res.write("A página que você procura não existe!");
-        res.end();
-    }
+    //     if(request_url) {
+    //         notFound = false;
+    //         request_url.callback(app, req, res);
+    //         break;
+    //     }
+    // }
+
+    // if(notFound) {
+    //     res.writeHead(404);
+    //     res.write("A página que você procura não existe!");
+    //     res.end();
+    // }
 }
 
 module.exports = app;
