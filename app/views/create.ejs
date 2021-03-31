@@ -23,56 +23,57 @@
 
         <main class="main">
             <div class="container">
-                <form id="form" action="" method="POST" enctype="multipart/form-data" class="form">
-                    <header class="form-header">
-                        <h2 class="form-header-title">Formulário de cadastro</h2>
-                    </header>
-
-                    <div class="form-group">
-                        <label for="name">Nome</label>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="Digite seu nome" required/>
-                        <!-- <small class="text-danger">Mensagem de erro</small> -->
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Digite seu CPF" required/>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Digite sem email" required/>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password">Senha</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="********" required/>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirm_password">Confirmar senha</label>
-                        <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********" required/>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="birthdate">Data de nascimento</label>
-                        <input type="date" name="birthdate" id="birthdate" class="form-control" placeholder="DD/MM/AAAA"/>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Telefone</label>
-                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Digite seu telefone" required/>
-                    </div>
-                    
-                    <button onclick="validate()" type="button" class="btn btn-color-3 btn-block btn-lg mt-4">Cadastrar</button>
-
-                    <hr>
-
-                    <small class="d-block pt-2 text-center">Já possui cadastro? <a href="/entrar">Entre com uma conta</a></small>
-                </form>
+                <div class="content">
+                    <form id="form" action="" method="POST" enctype="multipart/form-data" class="form">
+                        <header class="form-header">
+                            <h2 class="form-header-title">Formulário de cadastro</h2>
+                        </header>
+                        
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Digite seu nome" aria-describedby="small-email" required/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Digite seu CPF" aria-describedby="small-cpf" required/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Digite sem email" aria-describedby="small-email" required/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="********" aria-describedby="small-password" required/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password">Confirmar senha</label>
+                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********" aria-describedby="small-confirm_password" required/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthdate">Data de nascimento</label>
+                            <input type="date" name="birthdate" id="birthdate" class="form-control" placeholder="DD/MM/AAAA" aria-describedby="small-birthdate"/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Telefone</label>
+                            <input type="text" name="phone" id="phone" class="form-control" placeholder="Digite seu telefone" required aria-describedby="small-phone"/>
+                        </div>
+                        
+                        <button onclick="validate()" type="button" class="btn btn-color-3 btn-block btn-lg mt-4">Cadastrar</button>
+                        
+                        <hr>
+                        
+                        <small class="d-block pt-2 text-center">Já possui cadastro? <a href="/entrar">Entre com uma conta</a></small>
+                    </form>
+                </div>
             </div>
         </main>
-
+            
         <footer class="footer">
             <div class="container">
                 <div class="row">
@@ -80,7 +81,7 @@
                         <h5 class="footer-info-title">Trabalho de WEB1</h5>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam eum a nobis similique eaque, est recusandae animi, assumenda amet adipisci velit impedit, deserunt magnam! Dicta tempore aliquid iure eveniet eligendi!</p>
                     </div>
-
+                    
                     <div class="col-md-4 footer-info">
                         <h5 class="footer-info-title">Ferramentas utilizadas</h5>
                         <ul class="footer-info-list">
@@ -88,7 +89,7 @@
                             <li>MySQL</li>
                         </ul>
                     </div>
-
+                    
                     <div class="col-md-4 footer-info">
                         <h5 class="footer-info-title">Feito por</h5>
                         <ul class="footer-info-list">
@@ -105,6 +106,7 @@
     <script src="./js/jquery.js"></script>
     <script src="./js/popper.js"></script>
     <script src="./js/bootstrap.js"></script>
+    <script src="./js/mask.js"></script>
     <script src="./js/script.js"></script>
 </body>
 </html>

@@ -15,35 +15,29 @@
 
 <body>
     <div class="page-wrapper">
-        <!-- <header class="header">
+        <header class="header">
             <div class="container">
-                <img src="./images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo">
+                <img src="./images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/>
             </div>
         </header>
 
         <main class="main">
             <div class="container">
-                <form action="" method="POST" enctype="multipart/form-data" class="form">
-                    <header class="form-header">
-                        <h2 class="form-header-title">Formulário de login</h2>
-                    </header>
-                    
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Digite sem email" required/>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password">Senha</label>
-                        <input type="password" name="password" id="password" class="form-control" placeholder="********" required/>
-                    </div>
-                    
-                    <button class="btn btn-color-3 btn-block btn-lg mt-4">Entrar</button>
-
-                    <hr>
-
-                    <small class="d-block pt-2 text-center">Não possui cadastro? <a href="/cadastrar">Crie uma conta</a></small>
-                </form>
+                <div class="content">
+                    <% if (typeof(users) != "undefined") { %>
+                        <h1>Usuários cadastrados: <%= users.length %> </h1>
+                        
+                        <% for(let user of users) { %>
+                            <h3>ID: <%= user.id %> </h3>
+                            <h3>Nome: <%= user.name %> </h3>
+                            <h3>Email: <%= user.email %> </h3>
+                            <h3>CPF: <%= user.cpf %> </h3>
+                            <h3>Telefone: <%= user.tel %> </h3>
+                        <% } %>
+                    <% } else { %>
+                        <h1>Nenhum usuário cadastrado no banco de dados!</h1>    
+                    <% } %> 
+                </div>
             </div>
         </main>
 
@@ -73,20 +67,7 @@
                     </div>
                 </div>
             </div>
-        </footer> -->
-        <% if (typeof(users) != "undefined") { %>
-            <h1>Usuários cadastrados: <%= users.length %> </h1>
-            
-            <% for(let user of users) { %>
-                <h3>ID: <%= user.id %> </h3>
-                <h3>Nome: <%= user.name %> </h3>
-                <h3>Email: <%= user.email %> </h3>
-                <h3>CPF: <%= user.cpf %> </h3>
-                <h3>Telefone: <%= user.tel %> </h3>
-            <% } %>
-        <% } else { %>
-            <h1>Nenhum usuário cadastrado no banco de dados!</h1>    
-        <% } %> 
+        </footer>
     </div>
         
     <script src="./js/jquery.js"></script>
@@ -94,5 +75,4 @@
     <script src="./js/bootstrap.js"></script>
     <script src="./js/script.js"></script>
 </body>
-
 </html>
