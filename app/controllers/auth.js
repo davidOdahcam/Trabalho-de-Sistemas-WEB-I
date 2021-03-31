@@ -1,8 +1,5 @@
 module.exports.login = (app, req, res) => {
-    console.log(res)
-    // res.render("login");
-    res.write("20");
-    res.end();
+    res.render("login");
 }
 
 module.exports.signup = (app, req, res) => {
