@@ -10427,6 +10427,7 @@ body {
   background-color: #fff;
 }
 .content .content-header {
+  position: relative;
   margin-bottom: 2rem;
 }
 .content .content-header .content-header-title {
@@ -10442,6 +10443,12 @@ body {
   margin-top: 5px;
   border-radius: 1px;
   background-color: #3AB091;
+}
+
+.btn-clear {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

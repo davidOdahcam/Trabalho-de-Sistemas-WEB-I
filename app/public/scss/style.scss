@@ -27,6 +27,7 @@ body {
     box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.1);
     background-color: $white;
     .content-header {
+        position: relative;
         margin-bottom: 2rem;
         .content-header-title {
             font-size: 1.5rem;
@@ -35,4 +36,10 @@ body {
             @include line-after;
         }
     }
+}
+
+.btn-clear {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
