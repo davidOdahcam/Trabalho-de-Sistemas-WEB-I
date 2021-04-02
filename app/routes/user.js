@@ -14,9 +14,9 @@ module.exports = (app) => {
         app.app.controllers.user.store(app, req, res);
     });
 
-    app.get("/:id/mostrar", (req, res) => {
-        app.app.controllers.user.show(app, req, res);
-    });
+    app.post("/buscar", (req, res) => {
+        app.app.controllers.user.search(app, req, res);
+    })
 
     app.get("/:id/editar", (req, res) => {
         app.app.controllers.user.edit(app, req, res);

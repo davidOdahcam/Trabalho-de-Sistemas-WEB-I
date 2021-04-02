@@ -1,13 +1,4 @@
 .form {
-    .form-header {
-        margin-bottom: 2rem;
-        .form-header-title {
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            color: $color-3;
-            @include line-after;
-        }
-    }
     label {
         font-weight: 500;
     }
