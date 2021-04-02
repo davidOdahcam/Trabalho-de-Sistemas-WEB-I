@@ -4,6 +4,10 @@ class User {
         this.connection = connection();
     }
 
+    find(id, callback) {
+        this.connection.query(`select * from users where id = ${id}`, callback);
+    }
+
     selectUsers(name, callback) {
         this.connection.query(`select * from users where locate('${name}', users.name);`, callback);
     }

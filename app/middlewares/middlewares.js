@@ -1,7 +1,11 @@
 module.exports.auth = () => {
     return (req, res, next) => {
-        console.log(10);
-        
-        next();
+        if(!req.session.authorized) {
+            if(req.url != "/cadastrar") {
+                res.status(403).redirect("/login");
+            } else next();
+        } else if(req.url == "/cadastrar") {
+            res.redirect("/?message=logged");
+        } else next();
     }
 }

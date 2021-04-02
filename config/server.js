@@ -11,6 +11,11 @@ app.set("views", "./app/views");
 app.use(express.static("./app/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(expressSession({
+	secret: 'whEjkaslJHKlsap09Io',
+	resave: false,
+	saveUninitialized: false 
+}));
 
 consign()
     .include("app/routes")
