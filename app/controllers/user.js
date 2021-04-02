@@ -35,7 +35,9 @@ module.exports.create = (app, req, res) => {
 }
 
 module.exports.store = (app, req, res) => {
-    let dados = req.body;
+    let {confirm_password, ...dados} = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
+
+    confirm_password = undefined;
 
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
