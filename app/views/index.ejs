@@ -10,14 +10,29 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
     <div class="page-wrapper">
         <header class="header">
             <div class="container">
-                <a href="/"><img src="/images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
+                <div class="header-content">
+                    <a href="./"><img src="./images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
+    
+                    <div class="hamburger">
+                        <div class="line"></div>
+                    </div>
+    
+                    <% if (typeof auth !== 'undefined') { %>
+                        <nav class="menu">
+                            <ul>
+                                <li><a href="/<%= auth.id %>/editar">Editar perfil</a></li>
+                                <li><a href="/logout">Sair</a></li>
+                            </ul>
+                        </nav>
+                    <% } %>
+                </div>
             </div>
         </header>
 
@@ -26,15 +41,15 @@
                 <div class="content mb-4">
                     <form action="/buscar" method="post" class="">
                         <div class="form-row">
-                            <div class="col-md-10">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Busque por nome" required autofocus/>
+                            <div class="col-8 col-md-10">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Busque por nome" required/>
                             </div>
-                            <% if (typeof error != "undefined") { %><small class="text text-danger"><%= error.name %> </small><% } %>
-                            <div class="col-md-2">
+                            <div class="col-4 col-md-2">
                                 <button class="btn btn-color-3 btn-block">Buscar</button>
                             </div>
                         </div>
                     </form>
+
                 </div>
 
                 <% if (typeof search !== 'undefined') { %>
@@ -43,33 +58,35 @@
                             <h2 class="content-header-title">Resultados da busca</h2>
                         </header>
 
-                        <% if (typeof(users) != "undefined" && users.length > 0) { %>
-                            <span><strong>Total de resultados:</strong> <%= users.length %></span>
+                        <span><strong>Total de resultados:</strong> <%= users.length %></span>
+                        <div class="overflow-auto">
                             <table class="table">
                                 <thead class="bg-color-3 text-light">
                                     <tr>
                                         <th scope="col">Nome</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">CPF</th>
-                                        <th scope="col">Telefone</th>
-                                        <th scope="col">Data de Nascimento</th>
+                                        <th scope="col" class="text-center">Idade</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <% for(let user of users) { %>
-                                    <tr>
-                                        <th scope="row"><%= user.name %></th>
-                                        <td><%= user.email %></td>
-                                        <td><%= user.cpf %></td>
-                                        <td><%= user.phone %></td>
-                                        <td><%= user.birthdate %></td>
-                                    </tr>
-                                <% } %>
+                                    <% if (typeof(users) != "undefined") { %>
+                                        <% if (users.length > 0) { %>
+                                            <% for(let user of users) { %>
+                                            <tr>
+                                                <th scope="row"><%= user.name %></th>
+                                                <td><%= user.email %></td>
+                                                <td data-date="<%= user.birthdate.getDate() %>" data-month="<%= user.birthdate.getMonth() %>" data-year="<%= user.birthdate.getFullYear() %>" class="birthdateTd text-center"></td>
+                                            </tr>
+                                            <% } %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Nenhum usuário encontrado!</td>
+                                            </tr>
+                                        <% } %>
+                                    <% } %>
                                 </tbody>
                             </table>
-                        <% } else { %>
-                            <h3>Nenhum usuário cadastrado no banco de dados!</h3>    
-                        <% } %>
+                        </div>
                     </div>
                 <% } %>
             </div>
@@ -104,9 +121,9 @@
         </footer>
     </div>
         
-    <script src="/js/jquery.js"></script>
-    <script src="/js/popper.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/script.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/popper.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>

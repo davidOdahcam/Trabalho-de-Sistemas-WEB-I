@@ -57,10 +57,6 @@ function checkBirthdate(birthdate) {
     if(b_year == year && b_month == month && b_day > day){
         console.log("Dia burro")
     }
-
-    
-
-
 }
 
 function displayMessage(name, form, type, msg) {
@@ -124,6 +120,16 @@ function validate() {
         document.getElementById("form").submit();
     }
 
+}
+
+// Calculando a idade de cada usuário encontrado e imprimindo-as na tabela
+window.onload = function() {
+    const birthdateTd = document.querySelectorAll('.birthdateTd');
+    birthdateTd.forEach(element => {
+        const birthdate = new Date(parseInt(element.dataset.year), parseInt(element.dataset.month), parseInt(element.dataset.date));
+        const now = new Date();
+        element.innerText = Math.floor((now - birthdate) / (1000 * 3600 * 24 * 365.25));
+    });
 }
 
 // MÁSCARAS
