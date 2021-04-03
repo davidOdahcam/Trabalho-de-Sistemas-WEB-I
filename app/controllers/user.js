@@ -109,9 +109,9 @@ module.exports.destroy = (app, req, res) => {
         } else {
             req.session.destroy((err) => {
                 if(err) {
-                    return res.stauts(500).json({redirect: "/?message=-3"});
+                    return res.status(500).json({redirect: "/?message=-3"});
                 } else {
-                    return res.stauts(200).json({redirect: "/?message=3"});
+                    return res.status(200).json({redirect: "/?message=3"});
                 }
             });
             // app.app.models.auth.logout(req, res);

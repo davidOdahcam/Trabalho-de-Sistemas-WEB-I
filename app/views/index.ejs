@@ -23,8 +23,8 @@
                     <div class="hamburger">
                         <div class="line"></div>
                     </div>
-
-                    <% if (typeof auth != 'undefined') { %>
+    
+                    <% if (typeof auth !== 'undefined') { %>
                         <nav class="menu">
                             <ul>
                                 <li><a href="/<%= auth.id %>/editar">Editar perfil</a></li>
@@ -49,7 +49,6 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
 
                 <% if (typeof search !== 'undefined') { %>
@@ -121,9 +120,9 @@
         </footer>
     </div>
         
-    <script src="./js/jquery.js"></script>
-    <script src="./js/popper.js"></script>
-    <script src="./js/bootstrap.js"></script>
-    <script src="./js/script.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>

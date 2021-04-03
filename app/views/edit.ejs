@@ -17,62 +17,80 @@
     <div class="page-wrapper">
         <header class="header">
             <div class="container">
-                <a href="/"><img src="/images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
+                <div class="header-content">
+                    <a href="/"><img src="/images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
+    
+                    <div class="hamburger">
+                        <div class="line"></div>
+                    </div>
+    
+                    <% if (typeof auth !== 'undefined') { %>
+                        <nav class="menu">
+                            <ul>
+                                <li><a href="/<%= auth.id %>/editar">Editar perfil</a></li>
+                                <li><a href="/logout">Sair</a></li>
+                            </ul>
+                        </nav>
+                    <% } %>
+                </div>
             </div>
         </header>
 
         <main class="main">
             <div class="container">
                 <div class="content">
-                    <form action="" method="POST" enctype="multipart/form-data" class="form">
+                    <form action="/<%= auth.id %>/editar" method="POST" enctype="multipart/form-data" class="form">
                         <header class="content-header">
                             <h2 class="content-header-title">Formulário de edição</h2>
-                            <button type="reset" class="btn btn-secondary btn-sm btn-clear">Limpar formulário</button>
+                            <div class="btn-clear">
+                                <button type="reset" class="btn btn-secondary btn-sm">Limpar formulário</button>
+                                <button onclick="deleteUser()" type="button" form="deletar" class="btn btn-danger btn-sm btn-delete">Deletar conta</button>
+                            </div>
                         </header>
                         
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input type="text" name="name" id="name" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.name %><% } %>" placeholder="Digite seu nome" value="" required/>
+                            <input type="text" name="name" id="name" class="form-control" value="<%= auth.name %>" placeholder="Digite seu nome" required/>
                             <% if (typeof error != "undefined" && error.name) { %><small class="text-danger"><%= error.name %> </small><% } %>
                         </div>
                         
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input type="text" name="cpf" id="cpf" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.cpf %><% } %>" placeholder="Digite seu CPF" value="" required/>
+                            <input type="text" name="cpf" id="cpf" class="form-control" value="<%= auth.cpf %>" placeholder="Digite seu CPF" required/>
                             <% if (typeof error != "undefined" && error.cpf) { %><small class="text text-danger"><%= error.cpf %> </small><% } %>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.email %><% } %>" placeholder="Digite sem email" value="" required/>
+                            <input type="email" name="email" id="email" class="form-control" value="<%= auth.email %>" placeholder="Digite sem email" required/>
                             <% if (typeof error != "undefined" && error.email) { %><small class="text text-danger"><%= error.email %> </small><% } %>
                         </div>
                         
                         <div class="form-group">
-                            <label for="password">Senha</label>
-                            <input type="password" name="password" id="password" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.password %><% } %>" placeholder="********" value="" required/>
-                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %> </small><% } %>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="confirm_password">Confirmar senha</label>
-                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.password %><% } %>" placeholder="********" value="" required/>
-                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %> </small><% } %>
-                        </div>
-                        
-                        <div class="form-group">
                             <label for="birthdate">Data de nascimento</label>
-                            <input type="date" name="birthdate" id="birthdate" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.birthdate %><% } %>" placeholder="DD/MM/AAAA" value=""/>
+                            <input type="date" name="birthdate" id="birthdate" class="form-control" value="<%= auth.birthdate %>" placeholder="DD/MM/AAAA"/>
                             <% if (typeof error != "undefined" && error.birthdate) { %><small class="text text-danger"><%= error.birthdate %> </small><% } %>
                         </div>
                         
                         <div class="form-group">
                             <label for="phone">Telefone</label>
-                            <input type="text" name="phone" id="phone" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.phone %><% } %>" placeholder="Digite seu telefone" value="" required/>
+                            <input type="text" name="phone" id="phone" class="form-control" value="<%= auth.phone %>" placeholder="Digite seu telefone" required/>
                             <% if (typeof error != "undefined" && error.phone) { %><small class="text text-danger"><%= error.phone %> </small><% } %>
                         </div>
                         
-                        <button class="btn btn-color-3 btn-block btn-lg mt-4">Cadastrar</button>
+                        <div class="form-group">
+                            <label for="password">Nova senha</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="********"/>
+                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %> </small><% } %>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password">Confirmar senha</label>
+                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********"/>
+                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %> </small><% } %>
+                        </div>
+
+                        <button class="btn btn-color-3 btn-block btn-lg mt-4">Alterar</button>
                         
                         <hr>
                         
@@ -110,10 +128,18 @@
             </div>
         </footer>
     </div>
-        
+
     <script src="/js/jquery.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/script.js"></script>
+
+    <script>
+        function deleteUser() {
+            fetch('/<%= auth.id %>/deletar', {
+                method: 'DELETE'
+            });
+        }
+    </script>
 </body>
 </html>
