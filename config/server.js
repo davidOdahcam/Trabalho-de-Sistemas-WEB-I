@@ -5,6 +5,7 @@ const expressSession = require("express-session");
 const cookieParser = require("cookie-parser");
 
 let app = express();
+
 app.set("view engine", "ejs");
 app.set("views", "./app/views");
 
@@ -20,7 +21,7 @@ app.use(express.static("./app/public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(expressSession({
-	secret: 'whEjkaslJHKlsap09Io',
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: false 
 }));
