@@ -5,7 +5,7 @@ module.exports.auth = () => {
                 res.status(403).redirect("/login");
             } else next();
         } else if(req.url == "/cadastrar") {
-            res.redirect("/?message=logged");
+            res.redirect("/?message=-4");
         } else next();
     }
 }

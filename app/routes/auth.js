@@ -3,7 +3,7 @@ const { auth } = require("../middlewares/middlewares.js");
 module.exports = (app) => {
     app.get("/login", (req, res) => {
         if(req.session.authorized) {
-            res.redirect("/?message=logged");
+            res.redirect("/?message=-4");
         } else {
             app.app.controllers.auth.login(app, req, res);
         }

@@ -1,5 +1,6 @@
 module.exports.index = (app, req, res) => {
     const messages = Object.freeze({
+        "-4": "O usuário já está logado",
         "-3": "Erro no logout",
         "-2": "Acesso Negado",
         "-1": "Algo deu errado durante a execução da query",
