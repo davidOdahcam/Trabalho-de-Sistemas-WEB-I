@@ -87,9 +87,9 @@ module.exports.update = (app, req, res) => {
     User.update(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.redirect("/?message=-1");
+            res.status(500).json({redirect: "/?message=-1"});
         } else {
-            res.redirect("/?message=1");
+            res.status(200).json({redirect: "/?message=1"});
         }
     });
 }
