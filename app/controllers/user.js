@@ -1,6 +1,13 @@
 module.exports.index = (app, req, res) => {
+    const messages = Object.freeze({
+        "-1": "Algo deu errado durante a execução da query",
+        "0": "Usuário adicionado com sucesso",
+        "1": "Usuário atualizado com sucesso",
+        "2": "Usuário deletado com sucesso"
+    });
+    
     if(req.query.message) {
-        res.render("index", {message: req.query.message});
+        res.render("index", {message: messages[req.query.message]});
     } else {
         res.render("index");
     }
@@ -15,9 +22,8 @@ module.exports.search = (app, req, res) => {
     User.selectUsers(name, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-           // console.log(result);
             res.render("index", {users: result, search: true});
         }
     })
@@ -35,21 +41,15 @@ module.exports.store = (app, req, res) => {
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
 
-    // IMPLEMENTAR: PASSAR PELO MIDDLEWARE DE AUTENTICAÇAO
-
     User.create((err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-          //  console.log("Usuário adicionado com sucesso");
-           //console.log(result)
-          // 
-          
            req.session.authorized = true;
            req.session.user = dados;
         
-           res.render("index", {message: "Usuário adicionado com sucesso"});
+           res.redirect("/?message=0");
         }
     })
 }
@@ -64,10 +64,9 @@ module.exports.edit = (app, req, res) => {
     User.find(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-           // console.log(result);
-            res.render("edit", {message: "Usuário editado com sucesso"});
+            res.render("edit");
         }
     });
 }
@@ -82,10 +81,9 @@ module.exports.update = (app, req, res) => {
     User.update(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-         //   console.log("Usuário editado com sucesso");
-            res.render("index", {message: "Usuário editado com sucesso"});
+            res.redirect("/?message=1");
         }
     });
 }
@@ -99,10 +97,9 @@ module.exports.destroy = (app, req, res) => {
     User.destroy(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-         //   console.log("Usuário deletado com sucesso");
-            res.render("index", {message: "Usuário deletado com sucesso"});
+            app.app.models.auth.logout(req, res);
         }
     });
 }

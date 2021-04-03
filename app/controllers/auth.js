@@ -20,7 +20,7 @@ module.exports.signup = (app, req, res) => {
                 
                 res.redirect("/");
             } else {
-                res.render("login", {error: "Credenciais Inválidas"});
+                res.render("login", {user: dados, error: "Credenciais Inválidas"});
             }
         }
     });
