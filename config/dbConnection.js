@@ -1,7 +1,5 @@
 let mysql = require('mysql');
 
-// let {DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE} = process.env;
-
 let connMySQL = () => {
 	console.log('Conexao com bd foi estabelecida');
 
