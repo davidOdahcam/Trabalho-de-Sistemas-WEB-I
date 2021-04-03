@@ -17,8 +17,7 @@ class User {
     }
     
     update(id, callback) {
-        // update users set column1=value, column2=value2 where id=${id} 
-        this.connection(`insert into users set ? where id = ${id}`, this.user, callback);
+        this.connection.query(`update users set ? where id = ${id}`, this.user, callback);
     }
 
     destroy(id, callback) {

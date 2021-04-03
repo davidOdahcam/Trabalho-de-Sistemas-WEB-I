@@ -39,7 +39,7 @@
         <main class="main">
             <div class="container">
                 <div class="content">
-                    <form action="/<%= auth.id %>/editar" method="POST" enctype="multipart/form-data" class="form">
+                    <form id="form" action="/<%= auth.id %>/editar" method="POST" enctype="multipart/form-data" class="form">
                         <header class="content-header">
                             <h2 class="content-header-title">Formulário de edição</h2>
                             <div class="btn-clear">
@@ -90,11 +90,12 @@
                             <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %> </small><% } %>
                         </div>
 
-                        <button class="btn btn-color-3 btn-block btn-lg mt-4">Alterar</button>
+                        <button onclick="updateUser()" type="button" class="btn btn-color-3 btn-block btn-lg mt-4">Alterar</button>
                         
-                        <hr>
+                        <!-- Comentei porque não faz sentido o cara poder fazer login na página de edição  -->
+                        <!-- <hr> -->
                         
-                        <small class="d-block pt-2 text-center">Já possui cadastro? <a href="/login">Entre com uma conta</a></small>
+                        <!-- <small class="d-block pt-2 text-center">Já possui cadastro? <a href="/login">Entre com uma conta</a></small> -->
                     </form>
                 </div>
             </div>
@@ -135,11 +136,58 @@
     <script src="/js/script.js"></script>
 
     <script>
-        function deleteUser() {
-            fetch('/<%= auth.id %>/deletar', {
-                method: 'DELETE'
-            });
+        // function deleteUser() {
+        //     fetch('/<%= auth.id %>/deletar', {
+        //         method: 'DELETE'
+        //     });
+        // }
+
+        function updateUser() {
+            let putAjax = new XMLHttpRequest();
+            let formData = {}
+        
+            const form = document.getElementById("form");
+
+            // console.log(form);
+
+            for(let input of form) {
+                if(input.value) {
+                    formData[input.name] = input.value;
+                }
+            }
+            
+            putAjax.onload = () => {
+                if(putAjax.status = 200) {
+                    alert("Usuário de id = <%= auth.id %> alterado com sucesso! Você será redirecionado para a tela de principal...");
+                    location.href = JSON.parse(putAjax.responseText).redirect;
+                } else {
+                    alert("Algo deu errado na edição do usuário!");
+                }
+            };
+
+            // VALIDAR A REQUISIÇÃO ANTES DE ENVIAR
+
+            putAjax.open("PUT", "http://localhost/<%= auth.id %>/editar");
+            putAjax.setRequestHeader("Content-Type", "application/json");
+            putAjax.send(JSON.stringify(formData));
         }
+
+        function deleteUser() {
+            let deleteAjax = new XMLHttpRequest();
+
+            deleteAjax.onload = () => {
+                if(deleteAjax.status = 200) {
+                    alert("Usuário de id = <%= auth.id %> deletado com sucesso! Você será redirecionado para a tela de login...");
+                    location.href = JSON.parse(deleteAjax.responseText).redirect;
+                } else {
+                    alert("Algo deu errado no delete do usuário!");
+                }
+            };
+
+            deleteAjax.open("DELETE", "http://localhost/<%= auth.id %>/deletar");
+            deleteAjax.send();
+        }
+
     </script>
 </body>
 </html>

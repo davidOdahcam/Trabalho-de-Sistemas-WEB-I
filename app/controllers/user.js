@@ -49,10 +49,12 @@ module.exports.store = (app, req, res) => {
             console.log({message: "Algo deu errado durante uma query", err: err})
             res.redirect("/?message=-1");
         } else {
-           req.session.authorized = true;
-           req.session.user = dados;
+            dados.id = result.insertId;
+
+            req.session.authorized = true;
+            req.session.user = dados;
         
-           res.redirect("/?message=0");
+            res.redirect("/?message=0");
         }
     })
 }
@@ -62,13 +64,11 @@ module.exports.edit = (app, req, res) => {
 
     if(req.session.user.id != id) {
         return res.status(403).redirect("/?message=-2");
-    }
-
-    const dados = req.body;
+    }    
     
     const connection = app.config.dbConnection;
-    const User = new app.app.models.user(dados, connection);
-
+    const User = new app.app.models.user(null, connection);
+    
     User.find(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
@@ -80,9 +80,16 @@ module.exports.edit = (app, req, res) => {
 }
 
 module.exports.update = (app, req, res) => {
-    const dados = req.body;
     const id = req.params.id
+    
+    if(req.session.user.id != id) {
+        return res.status(403).redirect("/?message=-2");
+    }
+    
+    let {confirm_password, ...dados} = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
 
+    confirm_password = undefined;
+    
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
 
@@ -91,6 +98,9 @@ module.exports.update = (app, req, res) => {
             console.log({message: "Algo deu errado durante uma query", err: err})
             res.status(500).json({redirect: "/?message=-1"});
         } else {
+            dados.id = req.session.user.id;
+
+            req.session.user = dados;
             res.status(200).json({redirect: "/?message=1"});
         }
     });
@@ -99,22 +109,25 @@ module.exports.update = (app, req, res) => {
 module.exports.destroy = (app, req, res) => {
     const id = req.params.id;
 
+    if(req.session.user.id != id) {
+        return res.status(403).json({redirect: "/?message=-2"});
+    }
+
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(null, connection);
 
     User.destroy(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.redirect("/?message=-1");
+            return res.status(500).json({redirect: "/?message=-1"});
         } else {
             req.session.destroy((err) => {
                 if(err) {
                     return res.status(500).json({redirect: "/?message=-3"});
                 } else {
-                    return res.status(200).json({redirect: "/?message=3"});
+                    return res.status(200).json({redirect: "/?message=2"});
                 }
             });
-            // app.app.models.auth.logout(req, res);
         }
     });
 }
