@@ -13,7 +13,7 @@ class Auth {
             if(err) {
                 res.status(500).json({msg: "Erro no servidor", erro: err});
             } else {
-                res.status(200).json({redirect: "/?message=2"});
+                res.redirect("/?message=3");
             }
         });
     }

@@ -1,10 +1,12 @@
 module.exports.index = (app, req, res) => {
     const messages = Object.freeze({
+        "-3": "Erro no logout",
         "-2": "Acesso Negado",
         "-1": "Algo deu errado durante a execução da query",
         "0": "Usuário adicionado com sucesso",
         "1": "Usuário atualizado com sucesso",
-        "2": "Usuário deletado com sucesso"
+        "2": "Usuário deletado com sucesso",
+        "3": "Logout realizado com sucesso"
     });
     
     if(req.query.message) {
@@ -105,7 +107,14 @@ module.exports.destroy = (app, req, res) => {
             console.log({message: "Algo deu errado durante uma query", err: err})
             res.redirect("/?message=-1");
         } else {
-            app.app.models.auth.logout(req, res);
+            req.session.destroy((err) => {
+                if(err) {
+                    return res.stauts(500).json({redirect: "/?message=-3"});
+                } else {
+                    return res.stauts(200).json({redirect: "/?message=3"});
+                }
+            });
+            // app.app.models.auth.logout(req, res);
         }
     });
 }
