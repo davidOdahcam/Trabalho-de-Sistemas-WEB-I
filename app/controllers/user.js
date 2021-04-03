@@ -1,5 +1,6 @@
 module.exports.index = (app, req, res) => {
     const messages = Object.freeze({
+        "-2": "Acesso Negado",
         "-1": "Algo deu errado durante a execução da query",
         "0": "Usuário adicionado com sucesso",
         "1": "Usuário atualizado com sucesso",
@@ -7,9 +8,9 @@ module.exports.index = (app, req, res) => {
     });
     
     if(req.query.message) {
-        res.render("index", {message: messages[req.query.message]});
+        res.render("index", {message: messages[req.query.message], auth: req.session.user});
     } else {
-        res.render("index");
+        res.render("index", {auth: req.session.user});
     }
 }
 
@@ -24,7 +25,7 @@ module.exports.search = (app, req, res) => {
             console.log({message: "Algo deu errado durante uma query", err: err})
             res.redirect("/?message=-1");
         } else {
-            res.render("index", {users: result, search: true});
+            res.render("index", {users: result, search: true, auth: req.session.user});
         }
     })
 }
@@ -56,6 +57,11 @@ module.exports.store = (app, req, res) => {
 
 module.exports.edit = (app, req, res) => {
     const id = req.params.id;
+
+    if(req.session.user.id != id) {
+        return res.status(403).redirect("/?message=-2");
+    }
+
     const dados = req.body;
     
     const connection = app.config.dbConnection;
@@ -66,7 +72,7 @@ module.exports.edit = (app, req, res) => {
             console.log({message: "Algo deu errado durante uma query", err: err})
             res.redirect("/?message=-1");
         } else {
-            res.render("edit");
+            res.render("edit", {user: result[0], auth: req.session.user});
         }
     });
 }
