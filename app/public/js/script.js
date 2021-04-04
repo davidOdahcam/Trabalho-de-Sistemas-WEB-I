@@ -1,4 +1,13 @@
+function Name(name) {
+    const regex = /[0-9]/;
+    if (name == "") return null;
+    if (name.length < 3) return false;
+    if (regex.test(name)) return false;
+    return true;
+}
 function CPF(cpf) {
+    console.log(cpf)
+    //if (cpf == "") return null;   
     if (typeof (cpf == "number")) cpf = cpf.toString();
     if (cpf.length > 11) {
         cpf = cpf.replace("-", "");
@@ -27,7 +36,14 @@ function CPF(cpf) {
     return true;
 
 }
+function Email(email) {
+    if (email == "") return null;
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 function Password(pass) {
+    if (pass == "") return null;
     if (pass.length < 5 || pass.length > 255) return false;
     return true;
 }
@@ -36,29 +52,22 @@ function confirmPassword(pass, cpass) {
     return false;
 }
 function checkBirthdate(birthdate) {
-    if(birthdate == "") return false;
-
+    if (birthdate == "") return null;
     let date = new Date();
     let year = date.getFullYear();
-    let month = date.getMonth()+1;
+    let month = date.getMonth() + 1;
     let day = date.getDate();
-    let b_year = parseInt(birthdate.slice(0,4));
-    let b_month = parseInt(birthdate.slice(5,7));
-    let b_day = parseInt(birthdate.slice(8,10));
-    console.log(b_day, day)
-    console.log(b_month, month)
-    console.log(b_year - year)
-    if(b_year > year || year - b_year > 110 ){
-        console.log("ano troll")
-    }
-    if(b_year == year && b_month > month){
-        console.log("mês troll")
-    }
-    if(b_year == year && b_month == month && b_day > day){
-        console.log("Dia burro")
-    }
-}
+    let b_year = parseInt(birthdate.slice(0, 4));
+    let b_month = parseInt(birthdate.slice(5, 7));
+    let b_day = parseInt(birthdate.slice(8, 10));
+    if (b_year > year || year - b_year > 110) return false
 
+    if (b_year == year && b_month > month) return false
+
+    if (b_year == year && b_month == month && b_day > day) return false
+
+    return true;
+}
 function displayMessage(name, form, type, msg) {
     if (document.getElementById(`small-${name}`)) {
         form.removeChild(form.lastChild);
@@ -76,6 +85,9 @@ function displayMessage(name, form, type, msg) {
         form.appendChild(small);
     }
 }
+function empty(name, cpf, email, password, confirm_password, birthdate) {
+
+}
 
 function validate() {
     let forms = document.getElementsByClassName("form-group")
@@ -86,32 +98,57 @@ function validate() {
     let confirm_password = document.getElementById("confirm_password").value;
     let birthdate = document.getElementById("birthdate").value;
     let error = 0;
-
+    console.log(Email(email))
+    if (Name(name) === false) {
+        displayMessage("Nome", forms[0], false, "inválido");
+        error = 1;
+    } else if (Name(name) === null) {
+        displayMessage("Nome", forms[0], null, "obrigatório");
+        error = 1;
+    } else {
+        displayMessage("Nome", forms[0], true, "válido");
+    }
     if (CPF(cpf) === false) {
         displayMessage("CPF", forms[1], false, "inválido");
         error = 1;
+    } else if (CPF(cpf) === null) {
+        displayMessage("CPF", forms[1], null, "obrigatório");
+        error = 1;
     } else {
         displayMessage("CPF", forms[1], true, "válido");
+    }
+    if(Email(email) === false){
+        displayMessage("Email", forms[2], false, "inválido");
+        error = 1;
+    }else if (Email(email) === null) {
+        displayMessage("Email", forms[2], null, "obrigatório");
+        error = 1;
+    }else{
+        displayMessage("Email", forms[2], true, "válido");
     }
 
     if (Password(password) === false) {
         displayMessage("Senha", forms[3], false, "inválida");
         error = 1;
+    } else if (Password(password) === null) {
+        displayMessage("Senha", forms[3], null, "obrigatória");
+        error = 1;
     } else {
         displayMessage("Senha", forms[3], true, "válida");
     }
 
-    if (confirmPassword(password, confirm_password) === false) {
+    if (confirmPassword(password, confirm_password) === false && Password(password) === true) {
         displayMessage("Senhas", forms[4], false, "diferentes");
         error = 1;
-    } else {
+    } else if (confirmPassword(password, confirm_password) === true && Password(password) === true) {
         displayMessage("Senhas", forms[4], true, "compatíveis");
     }
 
     if (checkBirthdate(birthdate) === false) {
-
-    } else {
-
+        displayMessage("Data", forms[5], false, "de nascimento inválida");
+        error = 1;
+    } else if (checkBirthdate(birthdate) === true) {
+        displayMessage("Data", forms[5], true, "de nascimento válida");
     }
 
     if (error == 1) {
@@ -134,4 +171,4 @@ window.onload = function() {
 
 // MÁSCARAS
 $('#cpf').mask('999.999.999-99');
-$('#phone').mask('(99) 9999-9999');
+$('#phone').mask('(99) 99999-9999');
