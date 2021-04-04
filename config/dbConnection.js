@@ -4,10 +4,10 @@ let connMySQL = () => {
 	console.log('Conexao com bd foi estabelecida');
 
 	return mysql.createConnection({
-		host : 'localhost',
-		user : 'root',
-		password : '1234',
-		database : 'web1'
+		host : process.env.DB_HOST || 'localhost',
+		user : process.env.DB_USERNAME || 'root',
+		password : process.env.DB_PASSWORD || '1234',
+		database : process.env.DB_DATABASE || 'web1'
 	});
 }
 

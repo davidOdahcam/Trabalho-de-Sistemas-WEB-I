@@ -3,13 +3,18 @@
     padding: 1rem 0;
     box-shadow: 0 5px 10px rgba($color: #000000, $alpha: 0.1);
     background-color: $white;
-    .logo {
-        width: 25%;
-        @include media-breakpoint-down(md) {
+    .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .logo {
             width: 50%;
-        }
-        @include media-breakpoint-down(sm) {
-            width: 80%;
+            @include media-breakpoint-down(md) {
+                width: 50%;
+            }
+            @include media-breakpoint-down(sm) {
+                width: 80%;
+            }
         }
     }
 }

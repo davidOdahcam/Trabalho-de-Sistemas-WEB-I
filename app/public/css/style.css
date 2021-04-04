@@ -10345,16 +10345,21 @@ h3 {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 }
-.header .logo {
-  width: 25%;
+.header .header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header .header-content .logo {
+  width: 50%;
 }
 @media (max-width: 991.98px) {
-  .header .logo {
+  .header .header-content .logo {
     width: 50%;
   }
 }
 @media (max-width: 767.98px) {
-  .header .logo {
+  .header .header-content .logo {
     width: 80%;
   }
 }
@@ -10400,6 +10405,72 @@ h3 {
   margin-right: 0.5rem;
   margin-bottom: 0.15rem;
   background-color: #3AB091;
+}
+
+.hamburger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 50px;
+  min-width: 50px;
+  height: 50px;
+}
+@media (min-width: 992px) {
+  .hamburger {
+    display: none;
+  }
+}
+.hamburger .line {
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: #4C94B0;
+}
+.hamburger .line::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: #4C94B0;
+  transform: translateY(8px);
+}
+.hamburger .line::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: #4C94B0;
+  transform: translateY(-8px);
+}
+
+@media (min-width: 768px) {
+  .menu ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .menu ul li:last-child::after {
+    display: none;
+  }
+  .menu ul li::after {
+    content: "|";
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #999999;
+  }
+  .menu ul li a {
+    color: #4C94B0;
+  }
+}
+@media (max-width: 991.98px) {
+  .menu {
+    display: none;
+  }
 }
 
 .form label {

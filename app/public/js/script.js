@@ -60,7 +60,6 @@ function checkBirthdate(birthdate) {
     let b_year = parseInt(birthdate.slice(0, 4));
     let b_month = parseInt(birthdate.slice(5, 7));
     let b_day = parseInt(birthdate.slice(8, 10));
-    console.log(birthdate)
     if (b_year > year || year - b_year > 110) return false
 
     if (b_year == year && b_month > month) return false
@@ -158,6 +157,16 @@ function validate() {
         document.getElementById("form").submit();
     }
 
+}
+
+// Calculando a idade de cada usuário encontrado e imprimindo-as na tabela
+window.onload = function() {
+    const birthdateTd = document.querySelectorAll('.birthdateTd');
+    birthdateTd.forEach(element => {
+        const birthdate = new Date(parseInt(element.dataset.year), parseInt(element.dataset.month), parseInt(element.dataset.date));
+        const now = new Date();
+        element.innerText = Math.floor((now - birthdate) / (1000 * 3600 * 24 * 365.25));
+    });
 }
 
 // MÁSCARAS

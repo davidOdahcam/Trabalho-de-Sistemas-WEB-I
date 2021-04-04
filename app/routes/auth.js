@@ -1,6 +1,12 @@
+const { auth } = require("../middlewares/middlewares.js");
+
 module.exports = (app) => {
     app.get("/login", (req, res) => {
-        app.app.controllers.auth.login(app, req, res);
+        if(req.session.authorized) {
+            res.redirect("/?message=-4");
+        } else {
+            app.app.controllers.auth.login(app, req, res);
+        }
     });
 
     app.post("/login", (req, res) => {

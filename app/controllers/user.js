@@ -1,16 +1,20 @@
 module.exports.index = (app, req, res) => {
-    const connection = app.config.dbConnection;
-    const User = new app.app.models.user(null, connection);
-
-    res.render("index");
-}
-
-module.exports.login = (app, req, res) => {
-    res.render("login");
-}
-
-module.exports.logout = (app, req, res) => {
-    res.end("logout");
+    const messages = Object.freeze({
+        "-4": "O usuário já está logado",
+        "-3": "Erro no logout",
+        "-2": "Acesso Negado",
+        "-1": "Algo deu errado durante a execução da query",
+        "0": "Usuário adicionado com sucesso",
+        "1": "Usuário atualizado com sucesso",
+        "2": "Usuário deletado com sucesso",
+        "3": "Logout realizado com sucesso"
+    });
+    
+    if(req.query.message) {
+        res.render("index", {message: messages[req.query.message], auth: req.session.user});
+    } else {
+        res.render("index", {auth: req.session.user});
+    }
 }
 
 module.exports.search = (app, req, res) => {
@@ -22,10 +26,9 @@ module.exports.search = (app, req, res) => {
     User.selectUsers(name, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-            console.log(result);
-            res.render("index", {users: result, search: true});
+            res.render("index", {users: result, search: true, auth: req.session.user});
         }
     })
 }
@@ -35,7 +38,9 @@ module.exports.create = (app, req, res) => {
 }
 
 module.exports.store = (app, req, res) => {
-    let dados = req.body;
+    let {confirm_password, ...dados} = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
+
+    confirm_password = undefined;
 
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
@@ -43,46 +48,61 @@ module.exports.store = (app, req, res) => {
     User.create((err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-            console.log("Usuário adicionado com sucesso");
-            res.render("index", {message: "Usuário adicionado com sucesso"});
+            dados.id = result.insertId;
+
+            req.session.authorized = true;
+            req.session.user = dados;
+        
+            res.redirect("/?message=0");
         }
     })
 }
 
 module.exports.edit = (app, req, res) => {
     const id = req.params.id;
-    const dados = req.body;
+
+    if(req.session.user.id != id) {
+        return res.status(403).redirect("/?message=-2");
+    }    
     
     const connection = app.config.dbConnection;
-    const User = new app.app.models.user(dados, connection);
-
-    User.selectOne(id, (err, result) => {
+    const User = new app.app.models.user(null, connection);
+    
+    User.find(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.redirect("/?message=-1");
         } else {
-            console.log(result);
-            res.render("edit", {message: "Usuário editado com sucesso"});
+            res.render("edit", {user: result[0], auth: req.session.user});
         }
     });
 }
 
 module.exports.update = (app, req, res) => {
-    const dados = req.body;
     const id = req.params.id
+    
+    if(req.session.user.id != id) {
+        return res.status(403).redirect("/?message=-2");
+    }
+    
+    let {confirm_password, ...dados} = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
 
+    confirm_password = undefined;
+    
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
 
     User.update(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            res.status(500).json({redirect: "/?message=-1"});
         } else {
-            console.log("Usuário editado com sucesso");
-            res.render("index", {message: "Usuário editado com sucesso"});
+            dados.id = req.session.user.id;
+
+            req.session.user = dados;
+            res.status(200).json({redirect: "/?message=1"});
         }
     });
 }
@@ -90,16 +110,25 @@ module.exports.update = (app, req, res) => {
 module.exports.destroy = (app, req, res) => {
     const id = req.params.id;
 
+    if(req.session.user.id != id) {
+        return res.status(403).json({redirect: "/?message=-2"});
+    }
+
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(null, connection);
 
     User.destroy(id, (err, result) => {
         if(err) {
             console.log({message: "Algo deu errado durante uma query", err: err})
-            res.render("index", {err: err})
+            return res.status(500).json({redirect: "/?message=-1"});
         } else {
-            console.log("Usuário deletado com sucesso");
-            res.render("index", {message: "Usuário deletado com sucesso"});
+            req.session.destroy((err) => {
+                if(err) {
+                    return res.status(500).json({redirect: "/?message=-3"});
+                } else {
+                    return res.status(200).json({redirect: "/?message=2"});
+                }
+            });
         }
     });
 }
