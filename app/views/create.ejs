@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label for="confirm_password">Confirmar senha</label>
                             <input type="password" name="confirm_password" id="confirm_password" value="<% if(typeof user != "undefined") { %><%= user.password %><% } %>" class="form-control" placeholder="********" aria-describedby="small-confirm_password" required/>
-                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %></small><% } %>
+                            <% if (typeof error != "undefined" && error.confirm_password) { %><small class="text text-danger"><%= error.confirm_password %></small><% } %>
                         </div>
                         
                         <div class="form-group">

@@ -1,4 +1,4 @@
-const { auth } = require("../middlewares/middlewares.js");
+
 
 module.exports = (app) => {
     app.get("/login", (req, res) => {

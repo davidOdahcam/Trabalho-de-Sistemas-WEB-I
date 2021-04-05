@@ -25,6 +25,7 @@ module.exports.signup = (app, req, res) => {
             }
         }
     });
+    
 }
 
 module.exports.logout = (app, req, res) => {
