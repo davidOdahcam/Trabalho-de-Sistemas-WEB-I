@@ -173,6 +173,7 @@ window.onload = function() {
 }
 
 function mask(element, pattern) {
+    if (element.value == '') return;
     unmask(element);
 
     for (let i = 0; i < element.value.length; i++) {
@@ -181,6 +182,13 @@ function mask(element, pattern) {
                 pattern = pattern.replace(pattern[j], element.value[i]);
                 break;
             }
+        }
+    }
+
+    for (let i = 0; i < pattern.length; i++) {
+        if (pattern[i] === '#') {
+            element.value = '';
+            return;
         }
     }
     element.value = pattern;
