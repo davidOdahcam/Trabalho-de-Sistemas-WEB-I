@@ -49,6 +49,7 @@ function Password(pass) {
     return true;
 }
 function confirmPassword(pass, cpass) {
+    if (cpass == "") return null;
     if (pass === cpass) return true;                                                    //compara a senha com a senha de confirmação
     return false;
 }
@@ -83,8 +84,10 @@ function displayMessage(name, form, type, msg) {                                
         small.innerText = `${name} ${msg}`;
         small.className = "text-danger";
         small.id = `small-${name}`;
+        if(name == "Senhas" && type == null) small.innerHTML = "É obrigatório confirmar senha";
         form.appendChild(small);
     }
+
 }
 
 function validate() {                                                                   //função principal para validar
@@ -96,16 +99,16 @@ function validate() {                                                           
     let confirm_password = document.getElementById("confirm_password").value;
     let birthdate = document.getElementById("birthdate").value;
     let error = false;                                                                      //parametro para confirmar se pode ou n enviar o formulário
-    /*if (Name(name) === false) {
-        displayMessage("Nome", forms[0], false, "inválido1");                                //chamada das funções, identificando se está certo, errado ou vazio
+    if (Name(name) === false) {
+        displayMessage("Nome", forms[0], false, "inválido");                                //chamada das funções, identificando se está certo, errado ou vazio
         error = true;
     } else if (Name(name) === null) {
         displayMessage("Nome", forms[0], null, "obrigatório");
         error = true;
     } else {
         displayMessage("Nome", forms[0], true, "válido");
-    }*/
-    /*if (CPF(cpf) === false) {
+    }
+    if (CPF(cpf) === false) {
         displayMessage("CPF", forms[1], false, "inválido");
         error = true;
     } else if (CPF(cpf) === null) {
@@ -113,8 +116,8 @@ function validate() {                                                           
         error = true;
     } else {
         displayMessage("CPF", forms[1], true, "válido");
-    }*/
-    /*if(Email(email) === false){
+    }
+    if(Email(email) === false){
         displayMessage("Email", forms[2], false, "inválido");
         error = true;
     }else if (Email(email) === null) {
@@ -122,9 +125,9 @@ function validate() {                                                           
         error = true;
     }else{
         displayMessage("Email", forms[2], true, "válido");
-    }*/
+    }
 
-    /*if (Password(password) === false) {
+    if (Password(password) === false) {
         displayMessage("Senha", forms[3], false, "inválida");
         error = true;
     } else if (Password(password) === null) {
@@ -134,12 +137,15 @@ function validate() {                                                           
         displayMessage("Senha", forms[3], true, "válida");
     }
 
-    if (confirmPassword(password, confirm_password) === false && Password(password) === true) {
+    if (confirmPassword(password, confirm_password) === null) {
+        displayMessage("Senhas", forms[4], null);
+        error = true;
+    }else if (confirmPassword(password, confirm_password) === false) {
         displayMessage("Senhas", forms[4], false, "diferentes");
         error = true;
-    } else if (confirmPassword(password, confirm_password) === true && Password(password) === true) {
+    }else if(Password(password) === true){
         displayMessage("Senhas", forms[4], true, "compatíveis");
-    }*/
+    }
 
     if (checkBirthdate(birthdate) === false) {
         displayMessage("Data", forms[5], false, "de nascimento inválida");
