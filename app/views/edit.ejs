@@ -21,7 +21,7 @@
                 <div class="header-content">
                     <a href="/"><img src="/images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
     
-                    <div class="hamburger">
+                    <div class="hamburger" onclick="toggleMenu()">
                         <div class="line"></div>
                     </div>
     
@@ -57,7 +57,7 @@
                         
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input type="text" name="cpf" id="cpf" class="form-control" value="<%= auth.cpf %>" placeholder="Digite seu CPF" required/>
+                            <input onfocus="unmask(this)" onblur="mask(this, '###.###.###-##')" onkeyup="numeric(this)" type="text" name="cpf" id="cpf" class="form-control" value="<%= auth.cpf %>" placeholder="Digite seu CPF" required/>
                             <% if (typeof error != "undefined" && error.cpf) { %><small class="text text-danger"><%= error.cpf %> </small><% } %>
                         </div>
                         
@@ -75,7 +75,7 @@
                         
                         <div class="form-group">
                             <label for="phone">Telefone</label>
-                            <input type="text" name="phone" id="phone" class="form-control" value="<%= auth.phone %>" placeholder="Digite seu telefone" required/>
+                            <input onfocus="unmask(this)" onblur="mask(this, '(##) ####-####')" onkeyup="numeric(this)" type="text" name="phone" id="phone" class="form-control" value="<%= auth.phone %>" placeholder="Digite seu telefone" required/>
                             <% if (typeof error != "undefined" && error.phone) { %><small class="text text-danger"><%= error.phone %> </small><% } %>
                         </div>
                         

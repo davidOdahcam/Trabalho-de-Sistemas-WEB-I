@@ -193,3 +193,10 @@ function unmask(element) {
 function numeric(element) {
     element.value = element.value.replace(/[^0-9]/g,'');
 }
+
+function toggleMenu() {
+    const menu = document.querySelector('.menu');
+    const hamburger = document.querySelector('.hamburger');
+    menu.classList.toggle('visible');
+    hamburger.classList.toggle('active')
+}

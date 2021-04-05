@@ -4,6 +4,7 @@
     height: 3px;
     border-radius: 1.5px;
     background-color: $color-2;
+    transition: transform 200ms ease-in-out;
     @if $isPseudo {
         transform: translateY($translate);
     }
@@ -11,6 +12,7 @@
 
 .hamburger {
     position: relative;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,6 +31,19 @@
         &::after {
             content: "";
             @include hamburger-line($translate: -8px,  $isPseudo: true);
+        }
+    }
+    &.active {
+        .line {
+            background: transparent;
+            &::before {
+                background-color: $white;
+                transform: rotate(45deg);
+            }
+            &::after {
+                background-color: $white;
+                transform: rotate(135deg);
+            }
         }
     }
 }
@@ -60,5 +75,38 @@
     }
     @include media-breakpoint-down(md) {
         display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        background-color: $color-3;
+        ul {
+            display: block;
+            margin-top: 75px;
+            list-style: none;
+            padding-inline-start: 0;
+            li {
+                text-align: center;
+                transition: background 200ms ease-in-out;
+                &::after {
+                    display: none;
+                }
+                &:hover {
+                    background-color: lighten($color: $color-3, $amount: 2%);
+                }
+                a {
+                    display: list-item;
+                    width: 100%;
+                    padding: 1rem;
+                    text-decoration: none;
+                    color: $white;
+                }
+            }
+        }
+        &.visible {
+            display: block;
+        }
     }
 }
