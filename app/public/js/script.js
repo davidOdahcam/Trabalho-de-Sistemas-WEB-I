@@ -167,5 +167,29 @@ window.onload = function() {
 }
 
 // MÁSCARAS
-$('#cpf').mask('999.999.999-99');
-$('#phone').mask('(99) 99999-9999');
+// $('#cpf').mask('999.999.999-99');
+// $('#phone').mask('(99) 9999-9999');
+
+function mask(element, pattern) {
+    let input = unmask(element);
+    
+    for (let i = 0; i < element.value.length; i++) {
+        for (let j = 0; j < pattern.length; j++) {
+            if (pattern[j] === '#') {
+                pattern = pattern.replace(pattern[j], element.value[i]);
+                break;
+            }
+        }
+    }
+    element.value = pattern;
+}
+
+function unmask(element) {
+    let value = element.value;
+    for (let i = 0; i < value.length; i++) {
+        if (!(parseInt(value[i]) || value[i] == '0')) {
+            value = value.replace(value[i], '');
+        }
+    }
+    element.value = value;
+}
