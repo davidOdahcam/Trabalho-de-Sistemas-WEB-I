@@ -166,13 +166,9 @@ window.onload = function() {
     });
 }
 
-// MÁSCARAS
-// $('#cpf').mask('999.999.999-99');
-// $('#phone').mask('(99) 9999-9999');
-
 function mask(element, pattern) {
-    let input = unmask(element);
-    
+    unmask(element);
+
     for (let i = 0; i < element.value.length; i++) {
         for (let j = 0; j < pattern.length; j++) {
             if (pattern[j] === '#') {
@@ -192,4 +188,8 @@ function unmask(element) {
         }
     }
     element.value = value;
+}
+
+function numeric(element) {
+    element.value = element.value.replace(/[^0-9]/g,'');
 }

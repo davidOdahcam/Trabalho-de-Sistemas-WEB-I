@@ -54,7 +54,7 @@
                         
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input onfocus="unmask(this)" onblur="mask(this, '###.###.###-##')" type="text" name="cpf" id="cpf" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.cpf %><% } %>" placeholder="Digite seu CPF" aria-describedby="small-cpf" required/>
+                            <input onfocus="unmask(this)" onblur="mask(this, '###.###.###-##')" onkeyup="numeric(this)" type="text" name="cpf" id="cpf" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.cpf %><% } %>" placeholder="Digite seu CPF" aria-describedby="small-cpf" required/>
                             <% if (typeof error != "undefined" && error.cpf) { %><small class="text text-danger"><%= error.cpf %></small><% } %>
                         </div>
                         
@@ -84,7 +84,7 @@
                         
                         <div class="form-group">
                             <label for="phone">Telefone</label>
-                            <input onfocus="unmask(this)" onblur="mask(this, '(##) ####-####')" type="text" name="phone" id="phone" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.phone %><% } %>" placeholder="Digite seu telefone" required aria-describedby="small-phone"/>
+                            <input onfocus="unmask(this)" onblur="mask(this, '(##) ####-####')" onkeyup="numeric(this)" type="text" name="phone" id="phone" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.phone %><% } %>" placeholder="Digite seu telefone" required aria-describedby="small-phone"/>
                             <% if (typeof error != "undefined" && error.phone) { %><small class="text text-danger"><%= error.phone %></small><% } %>
                         </div>
                         
