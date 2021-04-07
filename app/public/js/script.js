@@ -90,7 +90,7 @@ function displayMessage(name, form, type, msg) {                                
 }
 
 function validate() {                                                                   //função principal para validar
-    let forms = document.getElementsByClassName("form-group")                           //recebe os valores dos campos
+    let forms = document.getElementsByClassName("form-group");                           //recebe os valores dos campos
     let name = document.getElementById("name").value;
     let cpf = document.getElementById("cpf").value;
     let email = document.getElementById("email").value;

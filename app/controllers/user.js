@@ -90,8 +90,6 @@ module.exports.store = (app, req, res) => {
     const User = new app.app.models.user(dados, connection);
 
     User.create((err, result) => {
-
-
         if (err) {
             console.log({ message: "Algo deu errado durante uma query", err: err })
             res.redirect("/?message=-1");
