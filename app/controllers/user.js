@@ -19,7 +19,7 @@ function CPF(cpf) {
     if (resultDigit != cpf[10]) return false;
     return true;
 }
-function validate(dados) {
+function validate(dados, confirm_password) {
     const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
     const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let error = {};
@@ -35,8 +35,8 @@ function validate(dados) {
     if (dados.password == "") error.password = "Senha obrigatória";
     else if (dados.password.length < 5 || dados.password.length > 255) error.password = "Senha inválida";
 
-    if (dados.confirm_password == "" && dados.password != dados.confirm_password) error.confirm_password = "É obrigatório confirmar a senha";
-    else if (dados.password != dados.confirm_password) error.confirm_password = "Senhas diferentes";
+    if (confirm_password == "" && dados.password != confirm_password) error.confirm_password = "É obrigatório confirmar a senha";
+    else if (dados.password != confirm_password) error.confirm_password = "Senhas diferentes";
 
     return error;
 }
@@ -81,9 +81,9 @@ module.exports.create = (app, req, res) => {
 }
 
 module.exports.store = (app, req, res) => {
-    let {...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
+    let {confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
-    error = validate(dados);
+    error = validate(dados, confirm_password);
     if( Object.keys(error).length != 0) return res.render("create", { error });
 
     const connection = app.config.dbConnection;
