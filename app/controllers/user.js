@@ -19,7 +19,7 @@ function CPF(cpf) {
     if (resultDigit != cpf[10]) return false;
     return true;
 }
-function validate(dados, confirm_password) {
+function validate(dados, confirm_password,type) {
     const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
     const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let error = {};
@@ -83,9 +83,9 @@ module.exports.create = (app, req, res) => {
 module.exports.store = (app, req, res) => {
     let {confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
-    error = validate(dados, confirm_password);
+    error = validate(dados, confirm_password, 0);
     if( Object.keys(error).length != 0) return res.render("create", { error });
-
+    confirm_password = undefined;
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
 
@@ -132,7 +132,12 @@ module.exports.update = (app, req, res) => {
     }
 
     let { confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
-
+    console.log(dados)
+    console.log(confirm_password)
+    let error = {};
+    error = validate(dados, confirm_password);
+    console.log(error)
+    if( Object.keys(error).length != 0) return res.render("edit", { error, auth: req.session.user });
     confirm_password = undefined;
 
     const connection = app.config.dbConnection;
