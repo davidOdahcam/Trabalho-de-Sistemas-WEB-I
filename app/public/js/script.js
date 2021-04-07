@@ -1,14 +1,13 @@
 function Name(name) {                                                               //função para verificar o nome
+    if (name.charAt(name.length-1) == " ") name = name.substr(0,name.length-1);     //remove o espaço final, caso o usuario insira sem querer, mais de um espçao resultará em um nome inválido
     const regex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;                     //Expressão regular (regex)
     if (name == "") return null;                                                    //ve se está me branco
     if (name.length < 3) return false;                                              //menos de 3 espaços
-    console.log(regex.test(name));  
-    console.log(name)
     if (regex.test(name)) return true;                                             //retorna false caso tenha algum caracter indevido
     return false;
 }
 function CPF(cpf) {
-    //if (cpf == "") return null;   
+    if (cpf == "") return null;   
     if (typeof (cpf == "number")) cpf = cpf.toString();
     if (cpf.length > 11) {
         cpf = cpf.replace("-", "");
@@ -84,7 +83,7 @@ function displayMessage(name, form, type, msg) {                                
         small.innerText = `${name} ${msg}`;
         small.className = "text-danger";
         small.id = `small-${name}`;
-        if(name == "Senhas" && type == null) small.innerHTML = "É obrigatório confirmar senha";
+        if(name == "Senhas" && type == null) small.innerHTML = "É obrigatório confirmar a senha";
         form.appendChild(small);
     }
 
@@ -206,6 +205,7 @@ function unmask(element) {
 
 function numeric(element) {
     element.value = element.value.replace(/[^0-9]/g,'');
+    if (element.value.length > 10) element.onblur();
 }
 
 function toggleMenu() {

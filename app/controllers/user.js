@@ -19,6 +19,28 @@ function CPF(cpf) {
     if (resultDigit != cpf[10]) return false;
     return true;
 }
+function validate(dados) {
+    const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+    const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let error = {};
+    if (dados.name == "") error.name = "Nome obrigatório";
+    else if (dados.name.length < 3 || regexName.test(dados.name) == false) error.name = "Nome inválido";
+
+    if (dados.cpf == "") error.cpf = "CPF obrigatório";
+    else if (CPF(dados.cpf) == false) error.cpf = "CPF inválido";
+
+    if (dados.email == "") error.email = "Email obrigatório";
+    else if ((regexEmail.test(dados.email) == false)) error.email = "Email inválido";
+
+    if (dados.password == "") error.password = "Senha obrigatória";
+    else if (dados.password.length < 5 || dados.password.length > 255) error.password = "Senha inválida";
+
+    if (dados.confirm_password == "" && dados.password != dados.confirm_password) error.confirm_password = "É obrigatório confirmar a senha";
+    else if (dados.password != dados.confirm_password) error.confirm_password = "Senhas diferentes";
+
+    return error;
+}
+
 module.exports.index = (app, req, res) => {
     const messages = Object.freeze({
         "-4": "O usuário já está logado",
@@ -59,27 +81,10 @@ module.exports.create = (app, req, res) => {
 }
 
 module.exports.store = (app, req, res) => {
-    let { confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
-    const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
-    const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let {...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
-    if (dados.name == "") error.name = "Nome obrigatório";
-    else if (dados.name.length < 3 || regexName.test(dados.name) == false) error.name = "Nome inválido";
-
-    if (dados.cpf == "") error.cpf = "CPF obrigatório";
-    else if (CPF(dados.cpf) == false) error.cpf = "CPF inválido";
-
-    if (dados.email == "") error.email = "Email obrigatório";
-    else if((regexEmail.test(dados.email) == false)) error.email = "Email inválido";
-
-    if (dados.password == "") error.password = "Senha obrigatória";
-    else if(dados.password.length < 5 || dados.password.length > 255) error.password = "Senha inválida";
-
-    if (confirm_password == "" && dados.password != confirm_password) error.confirm_password = "É obrigatório confirmar senha";
-    else if(dados.password != confirm_password) error.confirm_password = "Senhas diferentes";
-
+    error = validate(dados);
     if( Object.keys(error).length != 0) return res.render("create", { error });
-    confirm_password = undefined;
 
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
