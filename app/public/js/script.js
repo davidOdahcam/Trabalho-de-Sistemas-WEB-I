@@ -211,6 +211,7 @@ function numeric(element) {
 function toggleMenu() {
     const menu = document.querySelector('.menu');
     const hamburger = document.querySelector('.hamburger');
+    console.log(hamburger)
     menu.classList.toggle('visible');
     hamburger.classList.toggle('active')
 }
