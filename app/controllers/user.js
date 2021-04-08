@@ -19,7 +19,7 @@ function CPF(cpf) {
     if (resultDigit != cpf[10]) return false;
     return true;
 }
-function validate(dados, confirm_password,type) {
+function validate(dados, confirm_password, type = true) {
     const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
     const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let error = {};
@@ -31,12 +31,16 @@ function validate(dados, confirm_password,type) {
 
     if (dados.email == "") error.email = "Email obrigatório";
     else if ((regexEmail.test(dados.email) == false)) error.email = "Email inválido";
+    if (type == true) {
+        if (dados.password == "") error.password = "Senha obrigatória";
+        else if (dados.password.length < 5 || dados.password.length > 255) error.password = "Senha inválida";
 
-    if (dados.password == "") error.password = "Senha obrigatória";
-    else if (dados.password.length < 5 || dados.password.length > 255) error.password = "Senha inválida";
-
-    if (confirm_password == "" && dados.password != confirm_password) error.confirm_password = "É obrigatório confirmar a senha";
-    else if (dados.password != confirm_password) error.confirm_password = "Senhas diferentes";
+        if (confirm_password == "" && dados.password != confirm_password) error.confirm_password = "É obrigatório confirmar a senha";
+        else if (dados.password != confirm_password) error.confirm_password = "Senhas diferentes";
+    } else{
+        if(dados.password) error.confirm_password = "É obrigatório confirmar a senha";
+        if(confirm_password) error.password = "Senha obrigatória";
+    }
 
     return error;
 }
@@ -81,10 +85,10 @@ module.exports.create = (app, req, res) => {
 }
 
 module.exports.store = (app, req, res) => {
-    let {confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
+    let { confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
     error = validate(dados, confirm_password, 0);
-    if( Object.keys(error).length != 0) return res.render("create", { error });
+    if (Object.keys(error).length != 0) return res.render("create", { error });
     confirm_password = undefined;
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
@@ -131,13 +135,13 @@ module.exports.update = (app, req, res) => {
         return res.status(403).redirect("/?message=-2");
     }
 
-    let { confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
-    console.log(dados)
-    console.log(confirm_password)
+    let { confirm_password, ...dados } = req.body;                              // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
-    error = validate(dados, confirm_password);
-    console.log(error)
-    if( Object.keys(error).length != 0) return res.render("edit", { error, auth: req.session.user });
+    
+    if(dados.password && confirm_password) error = validate(dados, confirm_password);
+    else error = validate(dados, confirm_password, false);
+
+    if (Object.keys(error).length != 0) return res.status(403).json(error);
     confirm_password = undefined;
 
     const connection = app.config.dbConnection;
