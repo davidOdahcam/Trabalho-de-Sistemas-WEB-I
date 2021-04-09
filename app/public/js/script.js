@@ -205,9 +205,26 @@ function unmask(element) {
 
 function numeric(element) {
     element.value = element.value.replace(/[^0-9]/g,'');
-    if (element.value.length > 10) element.onblur();
+    if (element.value.length > 10 && element.name == "cpf") element.onblur();
+    if (element.value.length > 11 && element.name == "phone") element.value = element.value.substr(0,11);
+    if (element.name == "phone") formatPhone(element);
 }
 
+function formatPhone(element){
+    let value = [...element.value];
+    value.splice(0,0,"(");
+    if (value.length > 3) value.splice(3,0,")");
+    if (value.length > 4) value.splice(4,0," ");
+    if (value.length > 9) value.splice(9,0,"-");
+    if (value.length == 15){
+        let aux = value[9];
+        value[9] = value[10];
+        value[10] = aux;
+    }
+    element.value = value.toString().split(",").join("");
+
+    
+}
 function toggleMenu() {
     const menu = document.querySelector('.menu');
     const hamburger = document.querySelector('.hamburger');
