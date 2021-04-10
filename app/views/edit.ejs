@@ -21,11 +21,11 @@
                 <div class="header-content">
                     <a href="/"><img src="/images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
     
-                    <div class="hamburger">
-                        <div class="line"></div>
-                    </div>
-    
                     <% if (typeof auth !== 'undefined') { %>
+                        <div class="hamburger" onclick="toggleMenu()">
+                            <div class="line"></div>
+                        </div>
+        
                         <nav class="menu">
                             <ul>
                                 <li><a href="/<%= auth.id %>/editar">Editar perfil</a></li>
@@ -52,43 +52,43 @@
                         <div class="form-group">
                             <label for="name">Nome</label>
                             <input type="text" name="name" id="name" class="form-control" value="<%= auth.name %>" placeholder="Digite seu nome" required/>
-                            <% if (typeof error != "undefined" && error.name) { %><small class="text-danger"><%= error.name %> </small><% } %>
+                            <small id="error-name" class="text-danger"></small>
                         </div>
                         
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input type="text" name="cpf" id="cpf" class="form-control" value="<%= auth.cpf %>" placeholder="Digite seu CPF" required/>
-                            <% if (typeof error != "undefined" && error.cpf) { %><small class="text text-danger"><%= error.cpf %> </small><% } %>
+                            <input onfocus="unmask(this)" onblur="mask(this, '###.###.###-##')" onkeyup="numeric(this)" type="text" name="cpf" id="cpf" class="form-control" value="<%= auth.cpf %>" placeholder="Digite seu CPF" required/>
+                            <small id="error-cpf" class="text-danger"></small>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" name="email" id="email" class="form-control" value="<%= auth.email %>" placeholder="Digite sem email" required/>
-                            <% if (typeof error != "undefined" && error.email) { %><small class="text text-danger"><%= error.email %> </small><% } %>
+                            <small id="error-email" class="text-danger"></small>
                         </div>
                         
                         <div class="form-group">
                             <label for="birthdate">Data de nascimento</label>
                             <input type="date" name="birthdate" id="birthdate" class="form-control" value="<%= auth.birthdate %>" placeholder="DD/MM/AAAA"/>
-                            <% if (typeof error != "undefined" && error.birthdate) { %><small class="text text-danger"><%= error.birthdate %> </small><% } %>
+                            <small id="error-birthdate" class="text-danger"></small>
                         </div>
                         
                         <div class="form-group">
                             <label for="phone">Telefone</label>
-                            <input type="text" name="phone" id="phone" class="form-control" value="<%= auth.phone %>" placeholder="Digite seu telefone" required/>
-                            <% if (typeof error != "undefined" && error.phone) { %><small class="text text-danger"><%= error.phone %> </small><% } %>
+                            <input onfocus="unmask(this)" onblur="mask(this, '(##) ####-####')" onkeyup="numeric(this)" type="text" name="phone" id="phone" class="form-control" value="<%= auth.phone %>" placeholder="Digite seu telefone" required/>
+                            <small id="error-phone" class="text-danger"></small>
                         </div>
                         
                         <div class="form-group">
                             <label for="password">Nova senha</label>
                             <input type="password" name="password" id="password" class="form-control" placeholder="********"/>
-                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %> </small><% } %>
+                            <small id="error-password" class="text-danger"></small>
                         </div>
                         
                         <div class="form-group">
                             <label for="confirm_password">Confirmar senha</label>
                             <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********"/>
-                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %> </small><% } %>
+                            <small id="error-confirm_password" class="text-danger"></small>
                         </div>
 
                         <button onclick="updateUser()" type="button" class="btn btn-color-3 btn-block btn-lg mt-4">Alterar</button>
@@ -137,12 +137,16 @@
     <script src="/js/script.js"></script>
 
     <script>
-        // function deleteUser() {
-        //     fetch('/<%= auth.id %>/deletar', {
-        //         method: 'DELETE'
-        //     });
-        // }
-
+        function showErrors(objeto){
+            let smalls = document.getElementsByTagName("small");
+            console.log(smalls)
+            for(let i =0; i < smalls.length; i++){
+                smalls[i].innerHTML ="";
+            }
+            for(let i in objeto){
+                document.getElementById(`error-${i}`).innerHTML = objeto[i];
+            }
+        }
         function updateUser() {
             let putAjax = new XMLHttpRequest();
             let formData = {}
@@ -158,11 +162,15 @@
             }
             
             putAjax.onload = () => {
-                if(putAjax.status = 200) {
+                if(putAjax.status == 200) {
                     alert("Usuário de id = <%= auth.id %> alterado com sucesso! Você será redirecionado para a tela de principal...");
+                    
                     location.href = JSON.parse(putAjax.responseText).redirect;
-                } else {
+                } else{
                     alert("Algo deu errado na edição do usuário!");
+                    let error = JSON.parse(putAjax.responseText);
+                    showErrors(error);
+                    
                 }
             };
 
@@ -182,6 +190,7 @@
                     location.href = JSON.parse(deleteAjax.responseText).redirect;
                 } else {
                     alert("Algo deu errado no delete do usuário!");
+                    
                 }
             };
 

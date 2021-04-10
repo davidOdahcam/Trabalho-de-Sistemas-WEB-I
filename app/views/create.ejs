@@ -21,11 +21,11 @@
                 <div class="header-content">
                     <a href="/"><img src="/images/ufrrj.svg" alt="Logotipo da UFRRJ" class="logo"/></a>
     
-                    <div class="hamburger">
-                        <div class="line"></div>
-                    </div>
-    
                     <% if (typeof auth !== 'undefined') { %>
+                        <div class="hamburger" onclick="toggleMenu()">
+                            <div class="line"></div>
+                        </div>
+        
                         <nav class="menu">
                             <ul>
                                 <li><a href="/<%= auth.id %>/editar">Editar perfil</a></li>
@@ -54,7 +54,7 @@
                         
                         <div class="form-group">
                             <label for="cpf">CPF</label>
-                            <input type="text" name="cpf" id="cpf" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.cpf %><% } %>" placeholder="Digite seu CPF" aria-describedby="small-cpf" required/>
+                            <input onfocus="unmask(this)" onblur="mask(this, '###.###.###-##')" onkeyup="numeric(this)" type="text" name="cpf" id="cpf" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.cpf %><% } %>" placeholder="Digite seu CPF" aria-describedby="small-cpf" required/>
                             <% if (typeof error != "undefined" && error.cpf) { %><small class="text text-danger"><%= error.cpf %></small><% } %>
                         </div>
                         
@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label for="confirm_password">Confirmar senha</label>
                             <input type="password" name="confirm_password" id="confirm_password" value="<% if(typeof user != "undefined") { %><%= user.password %><% } %>" class="form-control" placeholder="********" aria-describedby="small-confirm_password" required/>
-                            <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %></small><% } %>
+                            <% if (typeof error != "undefined" && error.confirm_password) { %><small class="text text-danger"><%= error.confirm_password %></small><% } %>
                         </div>
                         
                         <div class="form-group">
@@ -84,7 +84,7 @@
                         
                         <div class="form-group">
                             <label for="phone">Telefone</label>
-                            <input type="text" name="phone" id="phone" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.phone %><% } %>" placeholder="Digite seu telefone" required aria-describedby="small-phone"/>
+                            <input onkeyup="numeric(this)" type="text" name="phone" id="phone" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.phone %><% } %>" placeholder="Digite seu telefone" required aria-describedby="small-phone"/>
                             <% if (typeof error != "undefined" && error.phone) { %><small class="text text-danger"><%= error.phone %></small><% } %>
                         </div>
                         
@@ -130,7 +130,6 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.js"></script>
-    <script src="/js/mask.js"></script>
     <script src="/js/script.js"></script>
 </body>
 </html>

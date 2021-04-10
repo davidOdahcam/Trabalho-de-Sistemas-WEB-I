@@ -10409,6 +10409,7 @@ h3 {
 
 .hamburger {
   position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10427,6 +10428,7 @@ h3 {
   height: 3px;
   border-radius: 1.5px;
   background-color: #4C94B0;
+  transition: transform 200ms ease-in-out;
 }
 .hamburger .line::before {
   content: "";
@@ -10435,6 +10437,7 @@ h3 {
   height: 3px;
   border-radius: 1.5px;
   background-color: #4C94B0;
+  transition: transform 200ms ease-in-out;
   transform: translateY(8px);
 }
 .hamburger .line::after {
@@ -10444,7 +10447,19 @@ h3 {
   height: 3px;
   border-radius: 1.5px;
   background-color: #4C94B0;
+  transition: transform 200ms ease-in-out;
   transform: translateY(-8px);
+}
+.hamburger.active .line {
+  background: transparent;
+}
+.hamburger.active .line::before {
+  background-color: #fff;
+  transform: rotate(45deg);
+}
+.hamburger.active .line::after {
+  background-color: #fff;
+  transform: rotate(135deg);
 }
 
 @media (min-width: 768px) {
@@ -10470,6 +10485,39 @@ h3 {
 @media (max-width: 991.98px) {
   .menu {
     display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #3AB091;
+  }
+  .menu ul {
+    display: block;
+    margin-top: 75px;
+    list-style: none;
+    padding-inline-start: 0;
+  }
+  .menu ul li {
+    text-align: center;
+    transition: background 200ms ease-in-out;
+  }
+  .menu ul li::after {
+    display: none;
+  }
+  .menu ul li:hover {
+    background-color: #3db897;
+  }
+  .menu ul li a {
+    display: list-item;
+    width: 100%;
+    padding: 1rem;
+    text-decoration: none;
+    color: #fff;
+  }
+  .menu.visible {
+    display: block;
   }
 }
 
