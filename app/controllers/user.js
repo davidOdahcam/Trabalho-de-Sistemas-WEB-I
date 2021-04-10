@@ -47,7 +47,7 @@ module.exports.store = (app, req, res) => {
 
     User.create((err, result) => {
         if(err) {
-            console.log({message: "Algo deu errado durante uma query", err: err})
+            console.log({message: "Algo deu errado durante uma query", err: err});
             res.redirect("/?message=-1");
         } else {
             dados.id = result.insertId;
