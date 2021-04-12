@@ -14,6 +14,7 @@ function CPF(cpf) {
         cpf = cpf.split(".").join("");
     }
     if (cpf.length > 11 || cpf.length < 11) return false;
+    if (cpf == "000.000.000-00" || cpf == "111.111.111-11" || cpf == "222.222.222-22" || cpf == "333.333.333-33" || cpf == "444.444.444-44" || cpf == "555.555.555-55" || cpf == "666.666.666-66" || cpf == "777.777.777-77" || cpf == "888.888.888-88" || cpf == "999.999.999-99") return false;
     let resultDigit = 0;
     for (let i = 10; i > 1; i--) {
         resultDigit += cpf[10 - i] * i;
@@ -69,6 +70,14 @@ function checkBirthdate(birthdate) {
 
     return true;
 }
+function checkPhone(phone){
+    if (phone == "") return null;
+    phone = phone.replace(/[^0-9]/g,'');
+    if (phone.length < 10 || phone.length > 11) return false;
+
+}
+
+
 function displayMessage(name, form, type, msg) {                                        //função para mostrar o erro ou acerto para o usuario, recebe o nome do campo, aonde ele tá, a operação e a mensagem
     if (document.getElementById(`small-${name}`)) {                                     
         form.removeChild(form.lastChild);                                               //se já existir um aviso ele exclui
@@ -97,8 +106,9 @@ function validate() {                                                           
     let password = document.getElementById("password").value;
     let confirm_password = document.getElementById("confirm_password").value;
     let birthdate = document.getElementById("birthdate").value;
+    let phone = document.getElementById("phone").value;
     let error = false;                                                                      //parametro para confirmar se pode ou n enviar o formulário
-    if (Name(name) === false) {
+    /*if (Name(name) === false) {
         displayMessage("Nome", forms[0], false, "inválido");                                //chamada das funções, identificando se está certo, errado ou vazio
         error = true;
     } else if (Name(name) === null) {
@@ -145,14 +155,21 @@ function validate() {                                                           
     }else if(Password(password) === true){
         displayMessage("Senhas", forms[4], true, "compatíveis");
     }
-
-    if (checkBirthdate(birthdate) === false) {
+ if (checkBirthdate(birthdate) === false) {
         displayMessage("Data", forms[5], false, "de nascimento inválida");
         error = true;
     } else if (checkBirthdate(birthdate) === true) {
         displayMessage("Data", forms[5], true, "de nascimento válida");
     }
-
+    if(checkPhone(phone) === false){
+        displayMessage("Telefone", forms[6], false, "inválido");
+        error = true;
+    } else if(checkPhone(phone) === null){
+        displayMessage("Telefone", forms[6], null, "obrigatório");
+        error = true;
+    } else{
+        displayMessage("Telefone", forms[6], true, "válido");
+    }*/
     if (error == true) {                                                //se tudo der certo faz o submit                                          
         return false;
     } else {
@@ -222,8 +239,6 @@ function formatPhone(element){
         value[10] = aux;
     }
     element.value = value.toString().split(",").join("");
-
-    
 }
 function toggleMenu() {
     const menu = document.querySelector('.menu');

@@ -75,7 +75,7 @@
                         
                         <div class="form-group">
                             <label for="phone">Telefone</label>
-                            <input onfocus="unmask(this)" onblur="mask(this, '(##) ####-####')" onkeyup="numeric(this)" type="text" name="phone" id="phone" class="form-control" value="<%= auth.phone %>" placeholder="Digite seu telefone" required/>
+                            <input onkeyup="numeric(this)" type="text" name="phone" id="phone" class="form-control" value="<%= auth.phone %>" placeholder="Digite seu telefone" required/>
                             <small id="error-phone" class="text-danger"></small>
                         </div>
                         
@@ -91,12 +91,7 @@
                             <small id="error-confirm_password" class="text-danger"></small>
                         </div>
 
-                        <button onclick="updateUser()" type="button" class="btn btn-color-3 btn-block btn-lg mt-4">Alterar</button>
-                        
-                        <!-- Comentei porque não faz sentido o cara poder fazer login na página de edição  -->
-                        <!-- <hr> -->
-                        
-                        <!-- <small class="d-block pt-2 text-center">Já possui cadastro? <a href="/login">Entre com uma conta</a></small> -->
+                        <button onclick="updateUser()" type="button" class="btn btn-color-3 btn-block btn-lg mt-4">Alterar</button>                    
                     </form>
                 </div>
             </div>

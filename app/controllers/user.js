@@ -5,6 +5,7 @@ function CPF(cpf) {
         cpf = cpf.split(".").join("");
     }
     if (cpf.length > 11 || cpf.length < 11) return false;
+    if (cpf == "000.000.000-00" || cpf == "111.111.111-11" || cpf == "222.222.222-22" || cpf == "333.333.333-33" || cpf == "444.444.444-44" || cpf == "555.555.555-55" || cpf == "666.666.666-66" || cpf == "777.777.777-77" || cpf == "888.888.888-88" || cpf == "999.999.999-99") return false;
     let resultDigit = 0;
     for (let i = 10; i > 1; i--) {
         resultDigit += cpf[10 - i] * i;
@@ -19,9 +20,23 @@ function CPF(cpf) {
     if (resultDigit != cpf[10]) return false;
     return true;
 }
+function checkBirthdate(birthdate){
+    let date = new Date();                                                         
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let b_year = parseInt(birthdate.slice(0, 4));                                       
+    let b_month = parseInt(birthdate.slice(5, 7));
+    let b_day = parseInt(birthdate.slice(8, 10));
+    if (b_year > year || year - b_year > 110) return false;
+    if (b_year == year && b_month > month) return false;
+    if (b_year == year && b_month == month && b_day > day) return false;
+    return true;
+}
 function validate(dados, confirm_password, type = true) {
     const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
     const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    dados.phone = dados.phone.replace(/[^0-9]/g,'');
     let error = {};
     if (dados.name == "") error.name = "Nome obrigatório";
     else if (dados.name.length < 3 || regexName.test(dados.name) == false) error.name = "Nome inválido";
@@ -41,7 +56,11 @@ function validate(dados, confirm_password, type = true) {
         if(dados.password) error.confirm_password = "É obrigatório confirmar a senha";
         if(confirm_password) error.password = "Senha obrigatória";
     }
-
+     
+    if (checkBirthdate(dados.birthdate) == false) error.birthdate = "Data inválida";
+    if(dados.phone == "") error.phone = "Telefone obrigatório";
+    else if(dados.phone.length < 10 || dados.phone.length > 11) error.phone = "Telefone inválido";
+    
     return error;
 }
 
@@ -87,7 +106,7 @@ module.exports.create = (app, req, res) => {
 module.exports.store = (app, req, res) => {
     let { confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
-    error = validate(dados, confirm_password, 0);
+    error = validate(dados, confirm_password);
     if (Object.keys(error).length != 0) return res.render("create", { error });
     confirm_password = undefined;
     const connection = app.config.dbConnection;
