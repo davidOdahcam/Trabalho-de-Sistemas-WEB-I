@@ -1,70 +1,18 @@
-function CPF(cpf) {
-    if (typeof (cpf == "number")) cpf = cpf.toString();
-    if (cpf.length > 11) {
-        cpf = cpf.replace("-", "");
-        cpf = cpf.split(".").join("");
-    }
-    if (cpf.length > 11 || cpf.length < 11) return false;
-    if (cpf == "000.000.000-00" || cpf == "111.111.111-11" || cpf == "222.222.222-22" || cpf == "333.333.333-33" || cpf == "444.444.444-44" || cpf == "555.555.555-55" || cpf == "666.666.666-66" || cpf == "777.777.777-77" || cpf == "888.888.888-88" || cpf == "999.999.999-99") return false;
-    let resultDigit = 0;
-    for (let i = 10; i > 1; i--) {
-        resultDigit += cpf[10 - i] * i;
-    }
-    resultDigit = resultDigit % 11 == 0 || resultDigit % 11 == 1 ? 0 : 11 - resultDigit % 11;
-    if (resultDigit != cpf[9]) return false;
-    resultDigit = 0;
-    for (let i = 11; i > 1; i--) {
-        resultDigit += cpf[11 - i] * i;
-    }
-    resultDigit = resultDigit % 11 == 0 || resultDigit % 11 == 1 ? 0 : 11 - resultDigit % 11;
-    if (resultDigit != cpf[10]) return false;
-    return true;
-}
-function checkBirthdate(birthdate){
-    let date = new Date();                                                         
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let b_year = parseInt(birthdate.slice(0, 4));                                       
-    let b_month = parseInt(birthdate.slice(5, 7));
-    let b_day = parseInt(birthdate.slice(8, 10));
-    if (b_year > year || year - b_year > 110) return false;
-    if (b_year == year && b_month > month) return false;
-    if (b_year == year && b_month == month && b_day > day) return false;
-    return true;
-}
-function validate(dados, confirm_password, type = true) {
-    const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
-    const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    dados.phone = dados.phone.replace(/[^0-9]/g,'');
-    let error = {};
-    if (dados.name == "") error.name = "Nome obrigatório";
-    else if (dados.name.length < 3 || regexName.test(dados.name) == false) error.name = "Nome inválido";
-
-    if (dados.cpf == "") error.cpf = "CPF obrigatório";
-    else if (CPF(dados.cpf) == false) error.cpf = "CPF inválido";
-
-    if (dados.email == "") error.email = "Email obrigatório";
-    else if ((regexEmail.test(dados.email) == false)) error.email = "Email inválido";
-    if (type == true) {
-        if (dados.password == "") error.password = "Senha obrigatória";
-        else if (dados.password.length < 5 || dados.password.length > 255) error.password = "Senha inválida";
-
-        if (confirm_password == "" && dados.password != confirm_password) error.confirm_password = "É obrigatório confirmar a senha";
-        else if (dados.password != confirm_password) error.confirm_password = "Senhas diferentes";
-    } else{
-        if(dados.password) error.confirm_password = "É obrigatório confirmar a senha";
-        if(confirm_password) error.password = "Senha obrigatória";
-    }
-     
-    if (checkBirthdate(dados.birthdate) == false) error.birthdate = "Data inválida";
-    if(dados.phone == "") error.phone = "Telefone obrigatório";
-    else if(dados.phone.length < 10 || dados.phone.length > 11) error.phone = "Telefone inválido";
-    
-    return error;
-}
 
 module.exports.index = (app, req, res) => {
+    // const connection = app.config.dbConnection;
+    // const User = new app.app.models.user({email: "victor2007azevedo@hotmail.com"}, connection);
+    // User.checkEmail((err, result) => {
+    //     if(err) {
+    //         console.log({ message: "Algo deu errado durante uma query", err: err })
+    //         res.redirect("/?message=-1");
+    //     } else if(result.length) {
+    //         console.log(result);
+    //     }
+    // });
+
+    // return;
+
     const messages = Object.freeze({
         "-4": "O usuário já está logado",
         "-3": "Erro no logout",
@@ -106,11 +54,27 @@ module.exports.create = (app, req, res) => {
 module.exports.store = (app, req, res) => {
     let { confirm_password, ...dados } = req.body; // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
-    error = validate(dados, confirm_password);
+
+    error = app.app.models.validator.validate(dados, confirm_password);
+    
     if (Object.keys(error).length != 0) return res.render("create", { error });
-    confirm_password = undefined;
+    error = {};
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
+    
+    User.checkEmail( (err, result) => {
+        if(err) {
+            console.log({ message: "Algo deu errado durante uma query", err: err })
+            res.redirect("/?message=-1");
+        } else if(result.length > 0) {
+            error.email = "Email já cadastrado";
+            res.render();
+        }
+    });
+
+    console.log(error.email);
+    
+    confirm_password = undefined;
 
     User.create((err, result) => {
         if (err) {
@@ -124,7 +88,7 @@ module.exports.store = (app, req, res) => {
 
             res.redirect("/?message=0");
         }
-    })
+    });
 }
 
 module.exports.edit = (app, req, res) => {
@@ -156,15 +120,27 @@ module.exports.update = (app, req, res) => {
 
     let { confirm_password, ...dados } = req.body;                              // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
+
+    if(dados.password && confirm_password) error = app.app.models.validator.validate(dados, confirm_password);
+    else error = app.app.models.validator.validate(dados, confirm_password, false);
     
-    if(dados.password && confirm_password) error = validate(dados, confirm_password);
-    else error = validate(dados, confirm_password, false);
+    const connection = app.config.dbConnection;
+    const User = new app.app.models.user(dados, connection);
+
+    User.checkEmail((err, result) => {
+        if(err) {
+            console.log({ message: "Algo deu errado durante uma query", err: err })
+            res.redirect("/?message=-1");
+        } else if(result.length > 0) {
+            let user_id = result[0].id;
+            
+            if(id != user_id) error.email = "Email já cadastrado";
+        }
+    });
 
     if (Object.keys(error).length != 0) return res.status(403).json(error);
     confirm_password = undefined;
 
-    const connection = app.config.dbConnection;
-    const User = new app.app.models.user(dados, connection);
 
     User.update(id, (err, result) => {
         if (err) {

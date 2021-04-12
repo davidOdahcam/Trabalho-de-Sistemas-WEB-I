@@ -8,6 +8,10 @@ class User {
         this.connection.query(`select * from users where id = ${id}`, callback);
     }
 
+    checkEmail(callback) {
+        this.connection.query(`select * from users where email = "${this.user.email}"`, callback);
+    }
+
     selectUsers(name, callback) {
         this.connection.query(`select * from users where locate('${name}', users.name);`, callback);
     }
