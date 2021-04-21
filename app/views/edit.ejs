@@ -134,8 +134,7 @@
     <script>
         function showErrors(objeto){
             let smalls = document.getElementsByTagName("small");
-            console.log(smalls)
-            for(let i =0; i < smalls.length; i++){
+            for(let i = 0; i < smalls.length; i++){
                 smalls[i].innerHTML ="";
             }
             for(let i in objeto){
@@ -162,10 +161,8 @@
                     
                     location.href = JSON.parse(putAjax.responseText).redirect;
                 } else{
-                    alert("Algo deu errado na edição do usuário!");
                     let error = JSON.parse(putAjax.responseText);
                     showErrors(error);
-                    
                 }
             };
 

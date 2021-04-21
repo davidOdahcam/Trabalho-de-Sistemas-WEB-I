@@ -56,39 +56,43 @@ module.exports.store = (app, req, res) => {
     let error = {};
 
     error = app.app.models.validator.validate(dados, confirm_password);
-    
+
     if (Object.keys(error).length != 0) return res.render("create", { error });
-    error = {};
+
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
-    
-    User.checkEmail( (err, result) => {
-        if(err) {
-            console.log({ message: "Algo deu errado durante uma query", err: err })
-            res.redirect("/?message=-1");
-        } else if(result.length > 0) {
-            error.email = "Email já cadastrado";
-            res.render();
-        }
-    });
 
-    console.log(error.email);
-    
     confirm_password = undefined;
 
-    User.create((err, result) => {
+    User.checkEmail((err, result) => {
         if (err) {
             console.log({ message: "Algo deu errado durante uma query", err: err })
             res.redirect("/?message=-1");
         } else {
-            dados.id = result.insertId;
+            if (result.length > 0) {
+                error.email = "Email já cadastrado";
+                res.render("create", { user: dados, error });
+            } else {
+                User.create((err, result) => {
+                    if (err) {
+                        console.log({ message: "Algo deu errado durante uma query", err: err })
+                        res.redirect("/?message=-1");
+                    } else {
 
-            req.session.authorized = true;
-            req.session.user = dados;
+                        dados.id = result.insertId;
 
-            res.redirect("/?message=0");
+                        req.session.authorized = true;
+                        req.session.user = dados;
+
+                        res.redirect("/?message=0");
+
+                    }
+                });
+            }
         }
     });
+
+
 }
 
 module.exports.edit = (app, req, res) => {
@@ -121,38 +125,37 @@ module.exports.update = (app, req, res) => {
     let { confirm_password, ...dados } = req.body;                              // "dados" contem o valor de todos os inputs menos de "confirm_password"
     let error = {};
 
-    if(dados.password && confirm_password) error = app.app.models.validator.validate(dados, confirm_password);
+    if (dados.password && confirm_password) error = app.app.models.validator.validate(dados, confirm_password);
     else error = app.app.models.validator.validate(dados, confirm_password, false);
-    
+
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
-
-    User.checkEmail((err, result) => {
-        if(err) {
-            console.log({ message: "Algo deu errado durante uma query", err: err })
-            res.redirect("/?message=-1");
-        } else if(result.length > 0) {
-            let user_id = result[0].id;
-            
-            if(id != user_id) error.email = "Email já cadastrado";
-        }
-    });
 
     if (Object.keys(error).length != 0) return res.status(403).json(error);
     confirm_password = undefined;
 
-
-    User.update(id, (err, result) => {
-        if (err) {
+    User.checkEmail((err, result) => {
+        if(err) {
             console.log({ message: "Algo deu errado durante uma query", err: err })
             res.status(500).json({ redirect: "/?message=-1" });
         } else {
-            dados.id = req.session.user.id;
-
-            req.session.user = dados;
-            res.status(200).json({ redirect: "/?message=1" });
+            if(result.length > 0 && result[0].id != id) {
+                res.status(400).json({email: "Email já cadastrado"});
+            } else {
+                User.update(id, (err, result) => {
+                    if (err) {
+                        console.log({ message: "Algo deu errado durante uma query", err: err })
+                        res.status(500).json({ redirect: "/?message=-1" });
+                    } else {
+                        dados.id = req.session.user.id;
+            
+                        req.session.user = dados;
+                        res.status(200).json({ redirect: "/?message=1" });
+                    }
+                });
+            }
         }
-    });
+    })
 }
 
 module.exports.destroy = (app, req, res) => {
