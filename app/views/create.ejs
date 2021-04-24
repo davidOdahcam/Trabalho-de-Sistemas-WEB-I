@@ -45,7 +45,7 @@
                             <h2 class="content-header-title">Formulário de cadastro</h2>
                             <button type="reset" class="btn btn-secondary btn-sm btn-clear">Limpar formulário</button>
                         </header>
-                        
+
                         <div class="form-group">
                             <label for="name">Nome</label>
                             <input type="text" name="name" id="name" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.name %><% } %>" placeholder="Digite seu nome" aria-describedby="small-email" required/>
@@ -66,13 +66,13 @@
                         
                         <div class="form-group">
                             <label for="password">Senha</label>
-                            <input type="password" name="password" id="password" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.password %><% } %>" placeholder="********" aria-describedby="small-password" required/>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="********" aria-describedby="small-password" required/>
                             <% if (typeof error != "undefined" && error.password) { %><small class="text text-danger"><%= error.password %></small><% } %>
                         </div>
                         
                         <div class="form-group">
                             <label for="confirm_password">Confirmar senha</label>
-                            <input type="password" name="confirm_password" id="confirm_password" value="<% if(typeof user != "undefined") { %><%= user.password %><% } %>" class="form-control" placeholder="********" aria-describedby="small-confirm_password" required/>
+                            <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="********" aria-describedby="small-confirm_password" required/>
                             <% if (typeof error != "undefined" && error.confirm_password) { %><small class="text text-danger"><%= error.confirm_password %></small><% } %>
                         </div>
                         

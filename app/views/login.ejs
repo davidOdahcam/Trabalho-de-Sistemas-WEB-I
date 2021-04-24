@@ -39,10 +39,10 @@
                             
                             <div class="form-group">
                                 <label for="password">Senha</label>
-                                <input type="password" name="password" id="password" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.password %><% } %>" placeholder="********" required/>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="********" required/>
                                 <% if(typeof errors != "undefined" && errors.password) { %><small class="text text-danger"><%= errors.password.msg %></small><% } %>
+                                <% if(typeof error != "undefined") { %><small class="text text-danger"><%= error %></small><% } %> 
                             </div>
-                            <% if(typeof error != "undefined") { %><small class="text text-danger"><%= error %></small><% } %> 
                             <button class="btn btn-color-3 btn-block btn-lg mt-4">Entrar</button>
                             
                             <hr>
