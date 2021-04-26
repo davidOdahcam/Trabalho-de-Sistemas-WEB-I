@@ -1,9 +1,9 @@
 function Name(name) {                                                               //função para verificar o nome
-    if (name.charAt(name.length-1) == " ") name = name.substr(0,name.length-1);     //remove o espaço final, caso o usuario insira sem querer, mais de um espçao resultará em um nome inválido
-    const regex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;                     //Expressão regular (regex)
+    if (name.charAt(name.length-1) == " ") name = name.substr(0,name.length-1);     //remove o espaço final, caso o usuario insira sem querer, mais de um espçao resultará em um nome inválido             
+    const regex = /^[A-ZÀ-Ÿ][A-zÀ-ÿ']+\s([A-zÀ-ÿ']\s?)*[A-ZÀ-Ÿ][A-zÀ-ÿ']+$/;        //Expressão regular (regex)
     if (name == "") return null;                                                    //ve se está me branco
     if (name.length < 3) return false;                                              //menos de 3 espaços
-    if (regex.test(name)) return true;                                             //retorna false caso tenha algum caracter indevido
+    if (regex.test(name)) return true;                                              //retorna false caso tenha algum caracter indevido
     return false;
 }
 function CPF(cpf) {
@@ -108,7 +108,8 @@ function validate() {                                                           
     let birthdate = document.getElementById("birthdate").value;
     let phone = document.getElementById("phone").value;
     let error = false;                                                                      //parametro para confirmar se pode ou n enviar o formulário
-    /*if (Name(name) === false) {
+    
+    if (Name(name) === false) {
         displayMessage("Nome", forms[0], false, "inválido");                                //chamada das funções, identificando se está certo, errado ou vazio
         error = true;
     } else if (Name(name) === null) {
@@ -169,7 +170,7 @@ function validate() {                                                           
         error = true;
     } else{
         displayMessage("Telefone", forms[6], true, "válido");
-    }*/
+    }
     if (error == true) {                                                //se tudo der certo faz o submit                                          
         return false;
     } else {
