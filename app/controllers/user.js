@@ -81,10 +81,10 @@ module.exports.store = (app, req, res) => {
 
                         dados.id = result.insertId;
 
-                        req.session.authorized = true;
-                        req.session.user = dados;
+                        // req.session.authorized = true;
+                        // req.session.user = dados; // Quer que faça login depois
 
-                        res.redirect("/?message=0");
+                        res.redirect("/");
 
                     }
                 });

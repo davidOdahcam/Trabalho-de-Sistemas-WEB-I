@@ -157,7 +157,7 @@
             
             putAjax.onload = () => {
                 if(putAjax.status == 200) {
-                    alert("Usuário de id = <%= auth.id %> alterado com sucesso! Você será redirecionado para a tela de principal...");
+                    // alert("Usuário de id = <%= auth.id %> alterado com sucesso! Você será redirecionado para a tela de principal...");
                     
                     location.href = JSON.parse(putAjax.responseText).redirect;
                 } else{
