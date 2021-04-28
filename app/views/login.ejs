@@ -33,7 +33,7 @@
                             
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" id="email" class="form-control" value="<% if(typeof user != "undefined") { %><%= user.email %><% } %>" placeholder="Digite seu email" required autofocus/>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Digite seu email" required autofocus/>
                                 <% if(typeof errors != "undefined" && errors.email) { %><small class="text text-danger"><%= errors.email.msg %></small><% } %>
                             </div>
                             

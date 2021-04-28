@@ -47,6 +47,8 @@ module.exports.store = (app, req, res) => {
 
     if (Object.keys(error).length != 0) return res.render("create", { user: dados, error });
 
+    if (dados.birthdate == '') dados.birthdate = null;
+
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
 
@@ -69,10 +71,10 @@ module.exports.store = (app, req, res) => {
 
                         dados.id = result.insertId;
 
-                        req.session.authorized = true;
-                        req.session.user = dados;
+                        // req.session.authorized = true;
+                        // req.session.user = dados; // Quer que faça login depois
 
-                        res.redirect("/?message=0");
+                        res.redirect("/");
 
                     }
                 });
