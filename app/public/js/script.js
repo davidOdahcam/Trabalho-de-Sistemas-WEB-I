@@ -179,6 +179,13 @@ function validate() {                                                           
 
 }
 
+function clearForm() {
+    const inputs = document.querySelectorAll('input');
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].value = "";
+    }
+}
+
 // Calculando a idade de cada usuário encontrado e imprimindo-as na tabela
 window.onload = function() {
     const birthdateTd = document.querySelectorAll('.birthdateTd');

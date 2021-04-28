@@ -23,7 +23,7 @@ module.exports.signup = (app, req, res) => {
             res.render("login", {message: "Erro na autenticaçao"});
         } else {
             if(result.length > 0) {
-                result[0].birthdate = result[0].birthdate.toISOString().split("T").shift();
+                if (result[0].birthdate != null) result[0].birthdate = result[0].birthdate.toISOString().split("T").shift();
                 req.session.authorized = true;
                 req.session.user = result[0];
              

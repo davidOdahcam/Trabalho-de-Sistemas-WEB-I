@@ -62,9 +62,11 @@ class Validator{
             if(confirm_password) error.password = "Senha obrigatória";
         }
         
-        if (Validator.checkBirthdate(dados.birthdate) == false) error.birthdate = "Data inválida";
-        if(dados.phone == "") error.phone = "Telefone obrigatório";
-        else if(dados.phone.length < 10 || dados.phone.length > 11) error.phone = "Telefone inválido";
+        if (dados.birthdate != null) {
+            if (Validator.checkBirthdate(dados.birthdate) == false) error.birthdate = "Data inválida";
+            if(dados.phone == "") error.phone = "Telefone obrigatório";
+            else if(dados.phone.length < 10 || dados.phone.length > 11) error.phone = "Telefone inválido";
+        }
         
         return error;
     }

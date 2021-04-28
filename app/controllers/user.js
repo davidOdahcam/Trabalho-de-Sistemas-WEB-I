@@ -59,6 +59,8 @@ module.exports.store = (app, req, res) => {
 
     if (Object.keys(error).length != 0) return res.render("create", { user: dados, error });
 
+    if (dados.birthdate == '') dados.birthdate = null;
+
     const connection = app.config.dbConnection;
     const User = new app.app.models.user(dados, connection);
 
