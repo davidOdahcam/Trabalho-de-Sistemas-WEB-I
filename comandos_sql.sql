@@ -1,13 +1,15 @@
+DROP DATABASE IF EXISTS `web1`;
 CREATE DATABASE `web1`;
-
 USE `web1`;
-
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` INT(10) AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(100) NOT NULL,
-  `cpf` VARCHAR(14) NOT NULL,
-  `email` VARCHAR(255) UNIQUE NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `phone` VARCHAR(15) NOT NULL,
-  `birthdate` DATE
+  `id` int AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `birthdate` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
 );

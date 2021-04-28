@@ -75,7 +75,11 @@
                                             <tr>
                                                 <th scope="row"><%= user.name %></th>
                                                 <td><%= user.email %></td>
-                                                <td data-date="<%= user.birthdate.getDate() %>" data-month="<%= user.birthdate.getMonth() %>" data-year="<%= user.birthdate.getFullYear() %>" class="birthdateTd text-center"></td>
+                                                <% if (user.birthdate != null) { %>
+                                                    <td data-date="<%= user.birthdate.getDate() %>" data-month="<%= user.birthdate.getMonth() %>" data-year="<%= user.birthdate.getFullYear() %>" class="birthdateTd text-center"></td>
+                                                <% } else { %>
+                                                    <td class="text-center">Sem data cadastrada</td>
+                                                <% } %>
                                             </tr>
                                             <% } %>
                                         <% } else { %>
