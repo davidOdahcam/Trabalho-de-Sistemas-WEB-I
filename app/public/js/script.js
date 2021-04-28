@@ -1,5 +1,5 @@
 function Name(name) {                                                               //função para verificar o nome
-    if (name.charAt(name.length-1) == " ") name = name.substr(0,name.length-1);     //remove o espaço final, caso o usuario insira sem querer, mais de um espçao resultará em um nome inválido             
+    if (name.charAt(name.length - 1) == " ") name = name.substr(0, name.length - 1);     //remove o espaço final, caso o usuario insira sem querer, mais de um espçao resultará em um nome inválido             
     const regex = /^[A-ZÀ-Ÿ][A-zÀ-ÿ']+\s([A-zÀ-ÿ']\s?)*[A-ZÀ-Ÿ][A-zÀ-ÿ']+$/;        //Expressão regular (regex)
     if (name == "") return null;                                                    //ve se está me branco
     if (name.length < 3) return false;                                              //menos de 3 espaços
@@ -7,14 +7,14 @@ function Name(name) {                                                           
     return false;
 }
 function CPF(cpf) {
-    if (cpf == "") return null;   
+    if (cpf == "") return null;
     if (typeof (cpf == "number")) cpf = cpf.toString();
     if (cpf.length > 11) {
         cpf = cpf.replace("-", "");
         cpf = cpf.split(".").join("");
     }
     if (cpf.length > 11 || cpf.length < 11) return false;
-    if (cpf == "000.000.000-00" || cpf == "111.111.111-11" || cpf == "222.222.222-22" || cpf == "333.333.333-33" || cpf == "444.444.444-44" || cpf == "555.555.555-55" || cpf == "666.666.666-66" || cpf == "777.777.777-77" || cpf == "888.888.888-88" || cpf == "999.999.999-99") return false;
+    if (cpf == "00000000000" || cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999") return false;
     let resultDigit = 0;
     for (let i = 10; i > 1; i--) {
         resultDigit += cpf[10 - i] * i;
@@ -35,7 +35,6 @@ function CPF(cpf) {
     if (resultDigit != cpf[10]) return false;
 
     return true;
-
 }
 function Email(email) {
     if (email == "") return null;                                                       //vê se tá vazio
@@ -53,7 +52,7 @@ function confirmPassword(pass, cpass) {
     if (pass === cpass) return true;                                                    //compara a senha com a senha de confirmação
     return false;
 }
-function checkBirthdate(birthdate) {                                                    
+function checkBirthdate(birthdate) {
     if (birthdate == "") return null;
     let date = new Date();                                                              //pega a data atual e atribui a variaveis diferentes
     let year = date.getFullYear();
@@ -64,22 +63,21 @@ function checkBirthdate(birthdate) {
     let b_day = parseInt(birthdate.slice(8, 10));
     if (b_year > year || year - b_year > 110) return false                              //checando a idade max e minima
 
-    if (b_year == year && b_month > month) return false                         
+    if (b_year == year && b_month > month) return false
 
     if (b_year == year && b_month == month && b_day > day) return false
 
     return true;
 }
-function checkPhone(phone){
+function checkPhone(phone) {
     if (phone == "") return null;
-    phone = phone.replace(/[^0-9]/g,'');
+    phone = phone.replace(/[^0-9]/g, '');
     if (phone.length < 10 || phone.length > 11) return false;
 
 }
 
-
 function displayMessage(name, form, type, msg) {                                        //função para mostrar o erro ou acerto para o usuario, recebe o nome do campo, aonde ele tá, a operação e a mensagem
-    if (document.getElementById(`small-${name}`)) {                                     
+    if (document.getElementById(`small-${name}`)) {
         form.removeChild(form.lastChild);                                               //se já existir um aviso ele exclui
     }
     let small = document.createElement("small");
@@ -88,11 +86,11 @@ function displayMessage(name, form, type, msg) {                                
         small.className = "text-success";
         small.id = `small-${name}`;
         form.appendChild(small);
-    } else {                                                                            
+    } else {
         small.innerText = `${name} ${msg}`;
         small.className = "text-danger";
         small.id = `small-${name}`;
-        if(name == "Senhas" && type == null) small.innerHTML = "É obrigatório confirmar a senha";
+        if (name == "Senhas" && type == null) small.innerHTML = "É obrigatório confirmar a senha";
         form.appendChild(small);
     }
 
@@ -108,7 +106,7 @@ function validate() {                                                           
     let birthdate = document.getElementById("birthdate").value;
     let phone = document.getElementById("phone").value;
     let error = false;                                                                      //parametro para confirmar se pode ou n enviar o formulário
-    
+
     if (Name(name) === false) {
         displayMessage("Nome", forms[0], false, "inválido");                                //chamada das funções, identificando se está certo, errado ou vazio
         error = true;
@@ -127,13 +125,13 @@ function validate() {                                                           
     } else {
         displayMessage("CPF", forms[1], true, "válido");
     }
-    if(Email(email) === false){
+    if (Email(email) === false) {
         displayMessage("Email", forms[2], false, "inválido");
         error = true;
-    }else if (Email(email) === null) {
+    } else if (Email(email) === null) {
         displayMessage("Email", forms[2], null, "obrigatório");
         error = true;
-    }else{
+    } else {
         displayMessage("Email", forms[2], true, "válido");
     }
 
@@ -150,37 +148,37 @@ function validate() {                                                           
     if (confirmPassword(password, confirm_password) === null) {
         displayMessage("Senhas", forms[4], null);
         error = true;
-    }else if (confirmPassword(password, confirm_password) === false) {
+    } else if (confirmPassword(password, confirm_password) === false) {
         displayMessage("Senhas", forms[4], false, "diferentes");
         error = true;
-    }else if(Password(password) === true){
+    } else if (Password(password) === true) {
         displayMessage("Senhas", forms[4], true, "compatíveis");
     }
- if (checkBirthdate(birthdate) === false) {
+    if (checkBirthdate(birthdate) === false) {
         displayMessage("Data", forms[5], false, "de nascimento inválida");
         error = true;
     } else if (checkBirthdate(birthdate) === true) {
         displayMessage("Data", forms[5], true, "de nascimento válida");
     }
-    if(checkPhone(phone) === false){
+    if (checkPhone(phone) === false) {
         displayMessage("Telefone", forms[6], false, "inválido");
         error = true;
-    } else if(checkPhone(phone) === null){
+    } else if (checkPhone(phone) === null) {
         displayMessage("Telefone", forms[6], null, "obrigatório");
         error = true;
-    } else{
+    } else {
         displayMessage("Telefone", forms[6], true, "válido");
     }
     if (error == true) {                                                //se tudo der certo faz o submit                                          
         return false;
     } else {
-        document.getElementById("form").submit();           
+        document.getElementById("form").submit();
     }
 
 }
 
 // Calculando a idade de cada usuário encontrado e imprimindo-as na tabela
-window.onload = function() {
+window.onload = function () {
     const birthdateTd = document.querySelectorAll('.birthdateTd');
     birthdateTd.forEach(element => {
         const birthdate = new Date(parseInt(element.dataset.year), parseInt(element.dataset.month), parseInt(element.dataset.date));
@@ -222,19 +220,19 @@ function unmask(element) {
 }
 
 function numeric(element) {
-    element.value = element.value.replace(/[^0-9]/g,'');
+    element.value = element.value.replace(/[^0-9]/g, '');
     if (element.value.length > 10 && element.name == "cpf") element.onblur();
-    if (element.value.length > 11 && element.name == "phone") element.value = element.value.substr(0,11);
+    if (element.value.length > 11 && element.name == "phone") element.value = element.value.substr(0, 11);
     if (element.name == "phone") formatPhone(element);
 }
 
-function formatPhone(element){
+function formatPhone(element) {
     let value = [...element.value];
-    value.splice(0,0,"(");
-    if (value.length > 3) value.splice(3,0,")");
-    if (value.length > 4) value.splice(4,0," ");
-    if (value.length > 9) value.splice(9,0,"-");
-    if (value.length == 15){
+    value.splice(0, 0, "(");
+    if (value.length > 3) value.splice(3, 0, ")");
+    if (value.length > 4) value.splice(4, 0, " ");
+    if (value.length > 9) value.splice(9, 0, "-");
+    if (value.length == 15) {
         let aux = value[9];
         value[9] = value[10];
         value[10] = aux;

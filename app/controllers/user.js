@@ -1,17 +1,5 @@
 
 module.exports.index = (app, req, res) => {
-    // const connection = app.config.dbConnection;
-    // const User = new app.app.models.user({email: "victor2007azevedo@hotmail.com"}, connection);
-    // User.checkEmail((err, result) => {
-    //     if(err) {
-    //         console.log({ message: "Algo deu errado durante uma query", err: err })
-    //         res.redirect("/?message=-1");
-    //     } else if(result.length) {
-    //         console.log(result);
-    //     }
-    // });
-
-    // return;
 
     const messages = Object.freeze({
         "-4": "O usuário já está logado",
