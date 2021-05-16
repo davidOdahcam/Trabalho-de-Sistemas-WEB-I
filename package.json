@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davidOdahcam/trabalho_web_1.git"
+    "url": "git+https://github.com/davidOdahcam/Trabalho-de-Sistemas-WEB-I.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/davidOdahcam/trabalho_web_1/issues"
+    "url": "https://github.com/davidOdahcam/Trabalho-de-Sistemas-WEB-I/issues"
   },
-  "homepage": "https://github.com/davidOdahcam/trabalho_web_1#readme",
+  "homepage": "https://github.com/davidOdahcam/Trabalho-de-Sistemas-WEB-I#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
