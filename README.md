@@ -19,7 +19,7 @@ Este repositório trata-se do trabalho final de Sistemas WEB I realizado em 2021
 ```
     node app
 ```
-- Agora, basta acessar a URL localhost (estou utilizando a porta 80).
+- Agora, basta acessar a URL localhost (estamos utilizando a porta 80).
 
 <strong>As ferramentas utilizadas para sua produção foram:</strong>
 - [Node.js](https://nodejs.org/en/);
